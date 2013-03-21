@@ -19,7 +19,7 @@ namespace OpenTableDataViz.Installers
 		{
 			container.Register(
 						Component.For<IAppConfiguration>()
-						.ImplementedBy<AppConfigurationService>());
+						.ImplementedBy<AppConfigurationService>().LifeStyle.Singleton);
 
 		}
 	}
