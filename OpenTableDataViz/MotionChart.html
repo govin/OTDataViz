@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>Google Visualization API Sample</title>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+	<script type="text/javascript">
+		google.load('visualization', '1', { packages: ['motionchart'] });
+		
+		function drawRestaurantVisualization() {
+			// Adding the @US_STATE keyword
+			$.mockJSON.data.US_STATE = [
+				'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS',
+				'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
+				'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'
+			];
+
+			// create template and regular expression for request that
+			// should be mocked
+			$.mockJSON(/foo\.json/, {
+				"restaurants|50-100": [
+					{
+						"rid|+1": 1,
+						"name": "@LOREM",
+						"location": "@US_STATE",
+						"reservationcount|0-1000": 0,
+						"avgpartysize|1-12": 1
+					}
+				]
+			});
+			
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Restaurant');
+			data.addColumn('date', 'Date');
+			data.addColumn('number', 'Reservation Count');
+			data.addColumn('number', 'Average Party Size');
+			data.addColumn('string', 'Location');
+
+			var rows = [];
+			// request JSON as usual
+			$.getJSON('foo/foo.json', function (json) {
+				console.log(json);
+				console.log(json.length);
+				for(var index = 0, length = json.restaurants.length; index < length; index++) {
+					var rest = json.restaurants[index];
+					var name = rest.name + Math.floor((Math.random() * 100) + 1);
+					var dt = new Date(1988, 0, 1);
+					var dt1 = new Date(1988, 1, 1);
+					rows.push([name, dt, rest.reservationcount, rest.avgpartysize, rest.location]);
+					var resoCountAdjustment = Math.floor((Math.random() * 100) + 1);
+					if (resoCountAdjustment % 2 == 0) resoCountAdjustment = resoCountAdjustment * -1;
+					var psAdjustment = Math.floor((Math.random() * 10) + 1) % 2;
+					if (psAdjustment % 2 == 0) psAdjustment = psAdjustment * -1;
+					rows.push([name, dt1, rest.reservationcount + resoCountAdjustment, rest.avgpartysize + psAdjustment, rest.location]);
+				}
+				// this will be mocked
+			});
+			data.addRows(rows);
+			
+			var motionchart = new google.visualization.MotionChart(
+			document.getElementById('visualization'));
+			motionchart.draw(data, { 'width': 800, 'height': 400 });
+		}
+
+
+		google.setOnLoadCallback(drawRestaurantVisualization);
+	</script>
+</head>
+<body style="font-family: Arial; border: 0 none;">
+	<div id="visualization" style="width: 800px; height: 400px;"></div>
+</body>
+</html>
+​
