@@ -12,6 +12,7 @@ namespace OpenTableDataViz.Installers
 	using Castle.Windsor;
 
 	using OpenTableDataViz.Models;
+	using OpenTableDataViz.Services;
 
 	public class AppServicesInstaller : IWindsorInstaller
 	{
@@ -20,6 +21,18 @@ namespace OpenTableDataViz.Installers
 			container.Register(
 						Component.For<IAppConfiguration>()
 						.ImplementedBy<AppConfigurationService>().LifeStyle.Singleton);
+
+			container.Register(
+						Component.For<IEntityOperation>()
+						.ImplementedBy<EntityOpService>().LifeStyle.Singleton);
+
+			container.Register(
+						Component.For<ILogger>()
+						.ImplementedBy<LoggingService>().LifeStyle.Singleton);
+
+			container.Register(
+						Component.For<IReservationHistoryService>()
+						.ImplementedBy<ReservationHistoryService>().LifeStyle.Singleton);
 
 		}
 	}

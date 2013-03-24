@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace OpenTableDataViz.Controllers
 {
 	using OpenTableDataViz.Models;
+	using OpenTableDataViz.Services;
 
 	public class HomeController : Controller
 	{

@@ -41,8 +41,6 @@
 			var rows = [];
 			// request JSON as usual
 			$.getJSON('foo/foo.json', function (json) {
-				console.log(json);
-				console.log(json.length);
 				for(var index = 0, length = json.restaurants.length; index < length; index++) {
 					var rest = json.restaurants[index];
 					var name = rest.name + Math.floor((Math.random() * 100) + 1);
