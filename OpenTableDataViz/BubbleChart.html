@@ -1,65 +1,140 @@
 ﻿<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	
+	<head>
+		<link href="Content/kendo.common.min.css" rel="stylesheet" />
+		<link href="Content/kendo.dataviz.css" rel="stylesheet" />
+		<title>OpenTable Daily Stats</title>
+		<style>
 
-text {
-  font: 10px sans-serif;
-}
+			text {
+				font: 10px sans-serif;
+			}
 
-</style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
+			.logo{
+				margin-top: 15px;
+			}
 
-	var diameter = 960,
-		format = d3.format(",d"),
-		color = d3.scale.category20c();
+			body {
+				width: 920px;
+				margin-left: auto;
+				margin-right: auto;
+			}
 
-	var bubble = d3.layout.pack()
-		.sort(null)
-		.size([diameter, diameter])
-		.padding(1.5);
+			.header {
+				width: 912px;
+				height: 75px;
+			}
 
-	var svg = d3.select("body").append("svg")
-		.attr("width", diameter)
-		.attr("height", diameter)
-		.attr("class", "bubble");
+			.bubbleBox {
+				height: 658px;
+				margin-bottom: 10px;
+				border: solid 1px gray;
+				border-radius: 10px;
+				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
+				-moz-box-shadow: 5px 8px 8px #D9D9D9;
+				box-shadow: 5px 8px 8px #D9D9D9;
+			}
 
-	d3.json("flare.html", function (error, root) {
-		var node = svg.selectAll(".node")
-			.data(bubble.nodes(classes(root))
-			.filter(function (d) { return !d.children; }))
-		  .enter().append("g")
-			.attr("class", "node")
-			.attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+			.innerBubble{
+				float:left;
+			}
 
-		node.append("title")
-			.text(function (d) { return d.className + ": " + format(d.value); });
+			#list {
+				width: 300px;
+				height: 604px;
+				margin-left: 10px;
+				padding: 2px 2px 2px 2px;
+				overflow:hidden;
+			}
 
-		node.append("circle")
-			.attr("r", function (d) { return d.r; })
-			.style("fill", function (d) { return color(d.packageName); });
+			.clear{
+				clear:both;
+			}
 
-		node.append("text")
-			.attr("dy", ".3em")
-			.style("text-anchor", "middle")
-			.text(function (d) { return d.className.substring(0, d.r / 3); });
-	});
+			.radialBox {
+				width: 916px;
+				height: 300px;
+				border: solid 1px gray;
+				border-radius: 10px;
+				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
+				-moz-box-shadow: 5px 8px 8px #D9D9D9;
+				box-shadow: 5px 8px 8px #D9D9D9;
+			}
 
-	// Returns a flattened hierarchy containing all leaf nodes under the root.
-	function classes(root) {
-		var classes = [];
+			.radial {
+				display: inline-block;
+				height: 200px;
+				width: 300px;
+			}
 
-		function recurse(name, node) {
-			if (node.children) node.children.forEach(function (child) { recurse(node.name, child); });
-			else classes.push({ packageName: name, className: node.name, value: node.size });
-		}
+			.radialLabelBox {
+				display: inline-block;
+				height: 50px;
+				width: 300px;
+			}
 
-		recurse(null, root);
-		return { children: classes };
-	}
+			.radialLabel {
+				display: block;
+				text-align: center;
+				font-weight: bold;
+			}
 
-	d3.select(self.frameElement).style("height", diameter + "px");
+			.bubbleLabelBox, .radialHeaderLabelBox{
+				height: 50px;
+				width: 100%;
+			}
 
-</script>
-}
+			.bubbleLabelBox span{
+				display:block;
+				padding: 14px 4px 4px 150px;
+				font-weight:bold;
+			}
+
+			.radialHeaderLabelBox span{
+				display:block;
+				padding: 14px 4px 4px 4px;
+				font-weight:bold;
+				text-align:center;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<img class="logo" src="Content/img/Logo.png" />
+		</div>
+		<div class="bubbleBox">
+			<div class="clear bubbleLabelBox"><span>Top Restaurants by Hourly Reservation Count</span></div>
+			<div id="chart" class="innerBubble"></div>
+			<div id="list" class="innerBubble"></div>
+			<div class="clear"></div>
+		</div>
+		<div class="radialBox">
+			<div class="radialHeaderLabelBox"><span>Top Cuisines by Hourly Reservation Count</span></div>
+			<div>
+				<div id="firstRadial" class="radial"></div>
+				<div id="secondRadial" class="radial"></div>
+				<div id="thirdRadial" class="radial"></div>
+			</div>
+			<div>
+				<div class="radialLabelBox">
+					<span id="firstRadialText" class="radialLabel"></span>
+				</div>
+				<div class="radialLabelBox">
+					<span id="secondRadialText" class="radialLabel"></span>
+				</div>
+				<div class="radialLabelBox">
+					<span id="thirdRadialText" class="radialLabel"></span>
+				</div>
+			</div>
+		</div>
+		<button id="loadCharts">Load the charts</button>
+		<button id="loadRadials">Load the radials</button>
+		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+		<script type="text/javascript" src="Scripts/d3.min.js"></script>
+		<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
+		<script type="text/javascript" src="Scripts/Internal/BubbleViewModel.js"></script>
+	</body>
+</html>
