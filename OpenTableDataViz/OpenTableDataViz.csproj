@@ -197,6 +197,7 @@
     <Compile Include="Services\IMongoDBService.cs" />
     <Compile Include="Services\IReservationHistoryService.cs" />
     <Compile Include="Services\LoggingService.cs" />
+    <Compile Include="Services\ReservationHistoryService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="BubbleChart.html" />

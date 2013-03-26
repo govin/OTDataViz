@@ -13,6 +13,11 @@ namespace OpenTableDataViz.Api
 	{
 		private IReservationHistoryService history;
 
+		public ReservationHistoryController()
+		{
+			
+		}
+
 		public ReservationHistoryController(IReservationHistoryService history)
 		{
 			this.history = history;
@@ -20,7 +25,9 @@ namespace OpenTableDataViz.Api
 
         public HttpResponseMessage Get()
         {
-	        return this.GetResponse(this.history.GetHistory("blah", "blah"));
+	        var localhistory = new ReservationHistoryService(new MongoDBService(new AppConfigurationService(), new LoggingService()), 
+				new AppConfigurationService());
+			return this.GetResponse(localhistory.GetHistory("blah", "blah"));
         }
     }
 }

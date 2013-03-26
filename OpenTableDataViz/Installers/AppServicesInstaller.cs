@@ -31,6 +31,10 @@ namespace OpenTableDataViz.Installers
 						.ImplementedBy<LoggingService>().LifeStyle.Singleton);
 
 			container.Register(
+						Component.For<IMongoDBService>()
+						.ImplementedBy<MongoDBService>().LifeStyle.Singleton);
+
+			container.Register(
 						Component.For<IReservationHistoryService>()
 						.ImplementedBy<ReservationHistoryService>().LifeStyle.Singleton);
 
