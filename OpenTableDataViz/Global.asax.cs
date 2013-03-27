@@ -44,7 +44,7 @@ namespace OpenTableDataViz
 			var queryService = (IBusinessQuery)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IBusinessQuery));
 			var restaurants = queryService.GetAllRestaurants();
 			var cacheService = (ICacheService)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ICacheService));
-			cacheService.CacheItem(CacheKey.Restaurant, restaurants);
+			cacheService.SetCacheItem(CacheKey.Restaurant, restaurants);
 		}
 
 		private static void BootstrapContainer()

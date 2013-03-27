@@ -176,6 +176,7 @@
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\BubbleChartNAController.cs" />
+    <Compile Include="Api\RadialChartController.cs" />
     <Compile Include="Api\ReservationHistoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Installers\ControllersInstaller.cs" />
     <Compile Include="Installers\WebApiInstaller.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CuisineRadialModel.cs" />
     <Compile Include="Models\ReservationHistoryModel.cs" />
     <Compile Include="Models\ResoCountBubbleChartModel.cs" />
     <Compile Include="Models\ResoFeedModel.cs" />

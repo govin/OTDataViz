@@ -4,7 +4,7 @@ namespace OpenTableDataViz.Services
 
 	public class CacheService : ICacheService
 	{
-		public void CacheItem(string key, object item)
+		public void SetCacheItem(string key, object item)
 		{
 			HttpRuntime.Cache.Insert(key, item);
 		}

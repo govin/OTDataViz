@@ -6,18 +6,27 @@
             "data|3-3": [
                 {
                     "CuisineName": "@LOREM",
-                    "CurrentReservationCount|650-999": 0
+                    "ReservationCount|650-999": 0
                 }
             ]
         });
 
-        $.getJSON('boo/boo.json', function(json) {
-            $("#firstRadial").data("kendoRadialGauge").value(json.data[0].CurrentReservationCount);
-            $("#secondRadial").data("kendoRadialGauge").value(json.data[1].CurrentReservationCount);
-            $("#thirdRadial").data("kendoRadialGauge").value(json.data[2].CurrentReservationCount);
-            $("#firstRadialText").text(json.data[0].CuisineName);
-            $("#secondRadialText").text(json.data[1].CuisineName);
-            $("#thirdRadialText").text(json.data[2].CuisineName);
+        //$.getJSON('boo/boo.json', function(json) {
+    	//    $("#firstRadial").data("kendoRadialGauge").value(json.data[0].ReservationCount);
+    	//    $("#secondRadial").data("kendoRadialGauge").value(json.data[1].ReservationCount);
+    	//    $("#thirdRadial").data("kendoRadialGauge").value(json.data[2].ReservationCount);
+        //    $("#firstRadialText").text(json.data[0].CuisineName);
+        //    $("#secondRadialText").text(json.data[1].CuisineName);
+        //    $("#thirdRadialText").text(json.data[2].CuisineName);
+    	//});
+	    
+        $.getJSON('api/RadialChart', function (data) {
+        	$("#firstRadial").data("kendoRadialGauge").value(parseInt(data[0].ReservationCount, 10));
+        	$("#secondRadial").data("kendoRadialGauge").value(parseInt(data[1].ReservationCount, 10));
+        	$("#thirdRadial").data("kendoRadialGauge").value(parseInt(data[2].ReservationCount, 10));
+        	$("#firstRadialText").text(data[0].CuisineName);
+        	$("#secondRadialText").text(data[1].CuisineName);
+        	$("#thirdRadialText").text(data[2].CuisineName);
         });
     };
 
@@ -48,8 +57,8 @@
     	//});
 	    
     	//api/BubbleChartNA
-        $.getJSON('foo/foo.json', function (restaurants) {
-	        restaurants = restaurants.restaurants;
+        $.getJSON('api/BubbleChartNA', function (restaurants) {
+	        //restaurants = restaurants.restaurants;
 	        var rows = [];
     	    for (var index = 0, length = restaurants.length; index < length; index++) {
     	        var rest = restaurants[index];

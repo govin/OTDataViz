@@ -114,10 +114,36 @@ namespace OpenTableDataViz.Services
 			{
 				logger.LogError(ex);
 			}
-			
-			
 
 			return restaurantDictionary;
+		}
+
+		public List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes)
+		{
+			var resoFeedList = GetReservationsMadeInTheLastXMinutes(timeToGoBackInPastMinutes);
+			var resoLookUpByCuisine = new Dictionary<string, List<Reservation>>();
+			var restaurants = (Dictionary<long, RestaurantModel>) cacheService.GetCacheItem(CacheKey.Restaurant);
+			foreach (var resoFeedModel in resoFeedList)
+			{
+				var restaurant = restaurants[resoFeedModel.Reservations[0].Rid];
+				foreach (var reservation in resoFeedModel.Reservations)
+				{
+					if (resoLookUpByCuisine.ContainsKey(restaurant.CuisineType))
+					{
+						var resoList = resoLookUpByCuisine[restaurant.CuisineType];
+						resoList.Add(reservation);
+					}
+					else
+					{
+						var resoList = new List<Reservation> { reservation };
+						resoLookUpByCuisine.Add(restaurant.CuisineType, resoList);
+					}
+				}
+			}
+
+			var radialChartData = resoLookUpByCuisine.Keys.Select(cuisine => new CuisineRadialModel() { CuisineName = cuisine, ReservationCount = resoLookUpByCuisine[cuisine].Count() }).ToList();
+
+			return radialChartData.OrderByDescending(x => x.ReservationCount).Take(100).ToList();
 		}
 
 		public List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes)
@@ -179,7 +205,17 @@ namespace OpenTableDataViz.Services
 			if (dateTimeToGoBack < feed.Max_DateMadeUtc && feed.Max_Resid != prevMaxResId)
 			{
 				resoFeedList.Add(feed);
-				var newFeed = entityOp.GetEntity<ResoFeedModel>(feed.Href_prev);
+				var cacheItem = cacheService.GetCacheItem(feed.Href_prev);
+				ResoFeedModel newFeed;
+				if (cacheItem != null)
+				{
+					newFeed = (ResoFeedModel)cacheItem;
+				}
+				else
+				{
+					newFeed = entityOp.GetEntity<ResoFeedModel>(feed.Href_prev);	
+					cacheService.SetCacheItem(feed.Href_prev, newFeed);
+				}
 				this.GetReservations(dateTimeToGoBack, newFeed, feed.Max_Resid, ref resoFeedList);
 			}
 		}

@@ -17,5 +17,7 @@ namespace OpenTableDataViz.Services
 		List<ResoFeedModel> GetReservationsMadeInTheLastXMinutes(int xminutes);
 
 		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes);
+
+		List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes);
 	}
 }

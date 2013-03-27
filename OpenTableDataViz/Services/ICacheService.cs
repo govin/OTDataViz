@@ -8,7 +8,7 @@ namespace OpenTableDataViz.Services
 {
 	public interface ICacheService
 	{
-		void CacheItem(string key, object item);
+		void SetCacheItem(string key, object item);
 
 		object GetCacheItem(string key);
 	}
