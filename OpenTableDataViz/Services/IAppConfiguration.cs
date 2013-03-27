@@ -7,7 +7,11 @@ namespace OpenTableDataViz.Services
 {
 	public interface IAppConfiguration
 	{
-		string FeedAPIServerBaseUrl { get; set; }
+		string ResoFeedUrlNA { get; set; }
+
+		string ResoFeedUrlEU { get; set; }
+
+		string ResoFeedUrlAsia { get; set; }
 
 		string ConnectionStringDataVizDB { get; set; }
 

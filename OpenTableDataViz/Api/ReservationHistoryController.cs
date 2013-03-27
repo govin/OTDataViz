@@ -11,23 +11,20 @@ namespace OpenTableDataViz.Api
 
 	public class ReservationHistoryController : BaseApiController
 	{
-		private IReservationHistoryService history;
+		private IBusinessQuery history;
 
 		public ReservationHistoryController()
-		{
-			
+		{	
 		}
 
-		public ReservationHistoryController(IReservationHistoryService history)
+		public ReservationHistoryController(IBusinessQuery history)
 		{
 			this.history = history;
 		}
 
         public HttpResponseMessage Get()
-        {
-	        var localhistory = new ReservationHistoryService(new MongoDBService(new AppConfigurationService(), new LoggingService()), 
-				new AppConfigurationService());
-			return this.GetResponse(localhistory.GetHistory("blah", "blah"));
+        {   
+			return this.GetResponse(this.history.GetHistory("blah", "blah"));
         }
     }
 }

@@ -12,7 +12,9 @@ namespace OpenTableDataViz
 	using Castle.Windsor;
 	using Castle.Windsor.Installer;
 
+	using OpenTableDataViz.Models;
 	using OpenTableDataViz.Plumbing;
+	using OpenTableDataViz.Services;
 
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
 	// visit http://go.microsoft.com/?LinkId=9394801
@@ -31,12 +33,25 @@ namespace OpenTableDataViz
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 			AuthConfig.RegisterAuth();
 			BootstrapContainer();
+			CacheRestaurants();
+		}
+
+		private void CacheRestaurants()
+		{
+			//var entityOp = new EntityOpService(new LoggingService(), new AppConfigurationService());
+			//var resoFeed = entityOp.GetEntity<ResoFeedModel>("http://feeds-na.otcorp.opentable.com/reservations/created/");
+			
+			var queryService = (IBusinessQuery)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IBusinessQuery));
+			var restaurants = queryService.GetAllRestaurants();
+			var cacheService = (ICacheService)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ICacheService));
+			cacheService.CacheItem(CacheKey.Restaurant, restaurants);
 		}
 
 		private static void BootstrapContainer()
 		{
 			container = new WindsorContainer()
 				.Install(FromAssembly.This());
+			GlobalConfiguration.Configuration.DependencyResolver = new WindsorDependencyResolver(container.Kernel);
 			var controllerFactory = new WindsorControllerFactory(container.Kernel);
 			ControllerBuilder.Current.SetControllerFactory(controllerFactory);
 		}

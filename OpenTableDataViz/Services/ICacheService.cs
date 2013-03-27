@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace OpenTableDataViz.Services
 {
-	using OpenTableDataViz.Models;
-
-	public interface IReservationHistoryService
+	public interface ICacheService
 	{
-		List<ReservationHistoryModel> GetHistory(string isoStartDate, string isoEndDate);
+		void CacheItem(string key, object item);
+
+		object GetCacheItem(string key);
 	}
 }

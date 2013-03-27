@@ -15,6 +15,12 @@ namespace OpenTableDataViz.Services
 
 		private static string dvizDatabaseName = ConfigurationManager.AppSettings["DatabaseNameDataVizDB"];
 
+		private static string resoFeedUrlNA = ConfigurationManager.AppSettings["ResoFeedUrlNA"];
+
+		private static string resoFeedUrlEU = ConfigurationManager.AppSettings["ResoFeedUrlEU"];
+
+		private static string resoFeedUrlAsia = ConfigurationManager.AppSettings["ResoFeedUrlAsia"];
+
 		public string FeedAPIServerBaseUrl
 		{
 			get
@@ -48,6 +54,42 @@ namespace OpenTableDataViz.Services
 			set
 			{
 				dvizDatabaseName = value;
+			}
+		}
+
+		public string ResoFeedUrlNA
+		{
+			get
+			{
+				return resoFeedUrlNA;
+			}
+			set
+			{
+				resoFeedUrlNA = value;
+			}
+		}
+
+		public string ResoFeedUrlEU
+		{
+			get
+			{
+				return resoFeedUrlEU;
+			}
+			set
+			{
+				resoFeedUrlEU = value;
+			}
+		}
+
+		public string ResoFeedUrlAsia
+		{
+			get
+			{
+				return resoFeedUrlAsia;
+			}
+			set
+			{
+				resoFeedUrlAsia = value;
 			}
 		}
 	}

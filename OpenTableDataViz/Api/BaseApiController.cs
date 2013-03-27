@@ -13,12 +13,14 @@ namespace OpenTableDataViz.Api
 	using Newtonsoft.Json;
 
 	public class BaseApiController : ApiController
-	{	
-
+	{
 		protected HttpResponseMessage GetResponse<T>(T data)
 		{
 			var response = new HttpResponseMessage();
-			var formatter = new JsonMediaTypeFormatter() { SerializerSettings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Include } };
+			var formatter = new JsonMediaTypeFormatter()
+				{
+					SerializerSettings = new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Include }
+				};
 			response.Content = new ObjectContent<T>(data, formatter);
 			return response;
 		}
