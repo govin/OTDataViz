@@ -16,5 +16,7 @@ namespace OpenTableDataViz.Services
 		string ConnectionStringDataVizDB { get; set; }
 
 		string DatabaseNameDataVizDB { get; set; }
+
+		string RestaurantCsvFileLocation { get; set; }
 	}
 }

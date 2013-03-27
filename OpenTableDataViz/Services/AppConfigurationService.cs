@@ -21,6 +21,8 @@ namespace OpenTableDataViz.Services
 
 		private static string resoFeedUrlAsia = ConfigurationManager.AppSettings["ResoFeedUrlAsia"];
 
+		private static string restaurantCsvFileLocation = ConfigurationManager.AppSettings["RestaurantCsvFileLocation"];
+
 		public string FeedAPIServerBaseUrl
 		{
 			get
@@ -90,6 +92,18 @@ namespace OpenTableDataViz.Services
 			set
 			{
 				resoFeedUrlAsia = value;
+			}
+		}
+
+		public string RestaurantCsvFileLocation
+		{
+			get
+			{
+				return restaurantCsvFileLocation;
+			}
+			set
+			{
+				restaurantCsvFileLocation = value;
 			}
 		}
 	}

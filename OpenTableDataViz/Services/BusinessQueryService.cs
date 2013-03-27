@@ -22,12 +22,15 @@ namespace OpenTableDataViz.Services
 
 		private ICacheService cacheService;
 
-		public BusinessQueryService(IMongoDBService mongo, IAppConfiguration appConfiguration, IEntityOperation entityOp, ICacheService cacheService)
+		private ILogger logger;
+
+		public BusinessQueryService(IMongoDBService mongo, IAppConfiguration appConfiguration, IEntityOperation entityOp, ICacheService cacheService, ILogger logger)
 		{
 			this.mongo = mongo;
 			this.appConfiguration = appConfiguration;
 			this.entityOp = entityOp;
 			this.cacheService = cacheService;
+			this.logger = logger;
 		}
 
 		public List<ReservationHistoryModel> GetHistory(string isoStartDate, string isoEndDate)
@@ -66,46 +69,53 @@ namespace OpenTableDataViz.Services
 			//		MetroAreaName = restaurant.MetroAreaName
 			//	}).ToList();
 			//return restaurantList;
-
+			
 			var restaurantDictionary = new Dictionary<long, RestaurantModel>();
-			using (var fields = new CsvReader(new StreamReader("C:\\DataViz\\Restaurants_Mar_26.csv"), false))
+			try
 			{
-				var fieldCount = fields.FieldCount;
-				var headers = fields.GetFieldHeaders();
-				while (fields.ReadNextRecord())
-				{
-					var restaurant = new RestaurantModel();
-					//var fields = line.Split(',');
-					var rid = long.Parse(fields[0]);
-					restaurant.RID = rid;
-					restaurant.RName = fields[1];
-					restaurant.RestaurantType = fields[2];
-					//restaurant.RestStateID = int.Parse(fields[3]);
-					restaurant.ExternalURL = fields[4];
-					//restaurant.Latitude = double.Parse(fields[5]);
-					//restaurant.Longitude = double.Parse(fields[6]);
-					restaurant.MenuURL = fields[7];
-					//restaurant.LanguageID = int.Parse(fields[8]);
-					restaurant.FacebookURL = fields[9];
-					// restaurant.ZIP = fields[10];
-					restaurant.Country = fields[11];
-					//restaurant.NeighborhoodID = int.Parse(fields[12]);
-					restaurant.Nbhoodname = fields[13];
-					//restaurant.MetroAreaID = int.TryParse(fields[14], out restaurant.MetroAreaID);
-					restaurant.MetroAreaName = fields[15];
-					restaurant.CuisineType = fields[16];
-					restaurant.DiningStyle = fields[17];
+				using (var fields = new CsvReader(new StreamReader(appConfiguration.RestaurantCsvFileLocation), false))
+				{	
+					while (fields.ReadNextRecord())
+					{
+						var restaurant = new RestaurantModel();
+						//var fields = line.Split(',');
+						var rid = long.Parse(fields[0]);
+						restaurant.RID = rid;
+						restaurant.RName = fields[1];
+						restaurant.RestaurantType = fields[2];
+						//restaurant.RestStateID = int.Parse(fields[3]);
+						restaurant.ExternalURL = fields[4];
+						//restaurant.Latitude = double.Parse(fields[5]);
+						//restaurant.Longitude = double.Parse(fields[6]);
+						restaurant.MenuURL = fields[7];
+						//restaurant.LanguageID = int.Parse(fields[8]);
+						restaurant.FacebookURL = fields[9];
+						// restaurant.ZIP = fields[10];
+						restaurant.Country = fields[11];
+						//restaurant.NeighborhoodID = int.Parse(fields[12]);
+						restaurant.Nbhoodname = fields[13];
+						//restaurant.MetroAreaID = int.TryParse(fields[14], out restaurant.MetroAreaID);
+						restaurant.MetroAreaName = fields[15];
+						restaurant.CuisineType = fields[16];
+						restaurant.DiningStyle = fields[17];
 
-					if (restaurantDictionary.ContainsKey(rid))
-					{
-						//throw new Exception("Two restaurants with same rid found");
-					}
-					else
-					{
-						restaurantDictionary.Add(rid, restaurant);
+						if (restaurantDictionary.ContainsKey(rid))
+						{
+							//throw new Exception("Two restaurants with same rid found");
+						}
+						else
+						{
+							restaurantDictionary.Add(rid, restaurant);
+						}
 					}
 				}
 			}
+			catch (Exception ex)
+			{
+				logger.LogError(ex);
+			}
+			
+			
 
 			return restaurantDictionary;
 		}
