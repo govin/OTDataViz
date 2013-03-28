@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reservation Map</title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			html {
+				 height: 100%
+			}
+
+			body {
+				 height: 100%; margin: 0; padding: 0
+			}
+
+			#map-canvas {
+				 height: 90%;
+				position: relative;
+			}
+
+			#gauges { 
+				height: 10%;
+				min-height: 75px;
+			}
+
+			.logo {
+				height: 100%;
+				width: 225px;
+				background-image: url(Content/img/Logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				float: left;
+			}
+
+			#list {
+				float: left;
+				height: 100%;
+				overflow: hidden;
+			}
+			.listItem {
+				width: 150px;
+				height: 100%;
+				float: left;
+				text-align:left;
+			}
+		</style>
+		
+		
+	</head>
+	<body>
+		<!--<div id="gauges">
+			<div class="logo"></div>
+			<div id="list"></div>
+		</div>-->
+		<div id="map-canvas"/>
+		
+		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+		<script type="text/javascript" src="Scripts/d3.min.js"></script>
+		<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
+		<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZCTMWJsQWIIrJreyd2ly2AzsOusVtfs&sensor=false">
+		</script>
+		
+		<script type="text/javascript">
+			var currentmarker;
+			var coordsList = [];
+
+			var styles = [
+				{
+					"featureType": "water",
+					"stylers": [
+						{ "color": "#ffffff" }
+					]
+				}, {
+					"featureType": "landscape",
+					"stylers": [
+						{ "color": "#ABA881" }
+					]
+				}, {
+					"featureType": "administrative",
+					"elementType": "labels.text.fill",
+					"stylers": [
+						{ "visibility": "on" },
+						{ "color": "#000000" }
+					]
+				}, {
+					"featureType": "poi.park",
+					"stylers": [
+					  { "visibility": "off" }
+					]
+				}, {
+					"featureType": "transit",
+					"stylers": [
+					  { "visibility": "off" }
+					]
+				}, {
+					"featureType": "administrative.locality",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}, {
+					"featureType": "administrative.country",
+					"stylers": [
+						{ "visibility": "on" }
+					]
+				}
+			];
+
+			var map;
+			var times = [];
+			var reservations = [];
+			
+			function loadReservations() {
+				$.getJSON('api/LiveResoFeed', function (data) {
+					reservations = data;
+					initializeMap();
+					animate(reservations);
+				});
+			};
+
+			function initializeMap() {
+				var mapOptions = {
+					center: new google.maps.LatLng(46.0730555556, -100.546666667),
+					zoom: 4,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById("map-canvas"),
+					mapOptions);
+
+				map.setOptions({ styles: styles });
+			}
+			
+			function animate(reservations) {
+				var fiveMinutesPrior = new Date();
+				fiveMinutesPrior.setMinutes(fiveMinutesPrior.getMinutes() - 5);
+				for (var index = 0, length = reservations.length; index < length; index++) {
+					var dateMade = new Date(reservations[index].DateMadeUtc + "Z");
+					var timeElapsedMs = dateMade.getTime() - fiveMinutesPrior.getTime();
+					times.push(timeElapsedMs);
+				}
+				
+				for (var i = 0, l = reservations.length; i < l; i++) {
+					doSetTimeout(i);
+				}
+
+				window.setTimeout(function () {
+					RemoveMarker();
+					reservations = [];
+					times = [];
+					loadReservations();
+				}, 5 * 60 * 1000);
+				
+				for(var j = 0; j < times.length; j++) {
+					console.log(times[j]);
+				}
+			}
+			
+			function doSetTimeout(i) {
+				setTimeout(function () { placeMarker(i); }, times[i]);
+			}
+			
+			function placeMarker(i) {
+				var reso = reservations[i];
+				var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
+				var image = {
+					url: 'Content/img/1364380262_onebit_09.png',
+					size: new google.maps.Size(48, 48),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(10, 48)
+				};
+				var marker = new google.maps.Marker({
+					position: myLatlng,
+					map: map,
+					icon: image,
+					title: reservations[i].RestaurantName
+				});
+				
+				currentmarker = marker;
+
+				window.setTimeout(function () { marker.setMap(null);}, 3000);
+			}
+
+
+			function RemoveMarker() {
+				currentmarker.setMap(null);
+				//StartAnimations();
+			}
+
+			//function LoadCoordinates() {
+			//	$.getJSON('foo/foo.json', function (json) {
+			//		for (var index = 0, length = json.restaurants.length; index < length; index++) {
+			//			var rest = json.restaurants[index];
+			//			coordsList.push({ lat: rest.Latitude, lon: rest.Longitude });
+			//		}
+			//	});
+			//}
+
+			$(document).ready(function () {
+				//initialize();
+				loadReservations();
+			});
+
+
+		</script>
+	</body>
+</html>

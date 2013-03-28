@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	</head>
+	<body>
+		<div id="content"></div>
+		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+		<script type="text/javascript">
+			
+			var times = [1000, 5000, 2000];
+			var signaled = [];
+			function StartAnimations() {
+				console.log("start animations");
+				
+				var lastHandle;
+				//for (var i = 0; i < 2; i++) {
+				//	var index = i;
+				//	lastHandle = window.setTimeout(function () { RemoveMarker(index); }, times[i]);
+				//}
+				//window.setTimeout(function () { RemoveMarker(1); }, 1000);
+				//window.setTimeout(function () { RemoveMarker(2); }, 5000);
+				//for (var index = 0; index < 10; index++) {
+				//	window.setTimeout(function () { RemoveMarker(index); }, 1000 * (index+1));
+				//}
+				
+
+				for (var i = 0; i < 3; i++)
+					doSetTimeout(i);
+			}
+			
+			function doSetTimeout(i) {
+				setTimeout(function () { RemoveMarker(i); }, times[i]);
+			}
+			
+			
+
+			function RemoveMarker(index) {
+				//console.log(index);
+				$("#content").append(new Date());
+				$("#content").append("<BR/>");
+				$("#content").append(index);
+				$("#content").append("<BR/>");
+				signaled.push(1);
+				if (signaled.length == times.length) {
+					signaled = [];
+					StartAnimations();
+					$("#content").append("ALl signalled");
+				}
+			}
+			
+			$(document).ready(function () {
+				StartAnimations();
+			});
+		</script>
+	</body>
+</html>

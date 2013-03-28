@@ -1,4 +1,4 @@
-﻿var BubbleViewModel = function(bubbleChartUrl, radialChartUrl) {
+﻿var BubbleViewModel = function(serviceUri) {
 	var self = this;
 
 	$.mockJSON.data.US_STATE = [
@@ -18,19 +18,17 @@
 		]
 	});
 
-	this.bubbleChartUrl = bubbleChartUrl;
-
-	this.radialChartUrl = radialChartUrl;
+	this.serviceUri = serviceUri;
 
 	this.loadRadials = function () {
-		//$.mockJSON(/boo\.json/, {
-		//	"data|3-3": [
-		//		{
-		//			"CuisineName": "@LOREM",
-		//			"CurrentReservationCount|650-999": 0
-		//		}
-		//	]
-		//});
+		$.mockJSON(/boo\.json/, {
+			"data|3-3": [
+				{
+					"CuisineName": "@LOREM",
+					"CurrentReservationCount|650-999": 0
+				}
+			]
+		});
 
 		//$.getJSON('boo/boo.json', function(json) {
 		//	$("#firstRadial").data("kendoRadialGauge").value(json.data[0].CurrentReservationCount);
@@ -41,7 +39,7 @@
 		//	$("#thirdRadialText").text(json.data[2].CuisineName);
 		//});
 		
-		$.getJSON(this.radialChartUrl, function (data) {
+		$.getJSON('api/RadialChart', function (data) {
 			$("#firstRadial").data("kendoRadialGauge").value(data[0].ReservationCount);
 			$("#secondRadial").data("kendoRadialGauge").value(data[1].ReservationCount);
 			$("#thirdRadial").data("kendoRadialGauge").value(data[2].ReservationCount);
@@ -120,10 +118,7 @@
 		locationData.sort(self.sortByCount);
 		$.each(locationData, function(index, loc) {
 			var ele = $('<div/>', { "style": "background-color:" + loc.color + ";", "class": "location" }).text(loc.location + " - " + loc.count);
-			$(ele).data("id", loc.location);
-			$(ele).click(function() {
-				self.getBubbleData(loc.location);
-			});
+			$(ele).data("id", loc.id);
 			$("#list").append(ele);
 		});
 	};
@@ -133,13 +128,20 @@
 	};
 
 	this.getBubbleData = function (id) {
-		var url = self.bubbleChartUrl;
+		var url = self.serviceUri;
 		var rows = [];
-		if (typeof id !== "undefined" && id !== null) {
-			url += "&metro=" + id;
+		if (id !== undefined && typeof id === "number") {
+			url += "?id=" + id;
 		}
+		//$.getJSON('foo/foo.json', function (json) {
+		//	for (var index = 0, length = json.restaurants.length; index < length; index++) {
+		//		var rest = json.restaurants[index];
+		//		rows.push({ packageName: rest.location, className: rest.Rname, value: rest.reservationcount, id: rest.id });
+		//	}
+		//	self.loadCharts(rows);
+		//});
 		
-		$.getJSON(url, function (restaurants) {
+		$.getJSON('api/BubbleChartNA', function (restaurants) {
 			for (var index = 0, length = restaurants.length; index < length; index++) {
 				var rest = restaurants[index];
 				rows.push({ packageName: rest.Location, className: rest.RName, value: rest.ReservationCount });
@@ -148,8 +150,8 @@
 		});
 	};
 
-	//this.fetchData = function() {
-	//	var id = $(this).data["id"];
-	//	self.getBubbleData(id);
-	//};
+	this.fetchData = function() {
+		var id = $(this).data("id");
+		self.getBubbleData(id);
+	};
 };

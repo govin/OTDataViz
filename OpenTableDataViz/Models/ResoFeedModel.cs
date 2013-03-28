@@ -62,5 +62,11 @@ namespace OpenTableDataViz.Models
 
 		[DataMember]
 		public string Partnername { get; set; }
+
+		public int MetroAreaId { get; set; }
+
+		public string MetroArea { get; set; }
+
+		public string Neighborhood { get; set; }
 	}
 }

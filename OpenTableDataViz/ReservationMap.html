@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reservation Map</title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+			html {
+				 height: 100%
+			}
+
+			body {
+				 height: 100%; margin: 0; padding: 0
+			}
+
+			#map-canvas {
+				 height: 90%;
+				position: relative;
+			}
+
+			#gauges { 
+				height: 10%;
+				min-height: 75px;
+			}
+
+			.logo {
+				height: 100%;
+				width: 225px;
+				background-image: url(Content/img/Logo.png);
+				background-position: center;
+				background-repeat: no-repeat;
+				float: left;
+			}
+
+			#list {
+				float: left;
+				height: 100%;
+				overflow: hidden;
+			}
+			.listItem {
+				width: 150px;
+				height: 100%;
+				float: left;
+				text-align:left;
+			}
+		</style>
+		
+		
+	</head>
+	<body>
+		<!--<div id="gauges">
+			<div class="logo"></div>
+			<div id="list"></div>
+		</div>-->
+		<div id="map-canvas"/>
+		
+		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+		<script type="text/javascript" src="Scripts/d3.min.js"></script>
+		<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
+		<script type="text/javascript"
+				src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZCTMWJsQWIIrJreyd2ly2AzsOusVtfs&sensor=false">
+		</script>
+		
+		<script type="text/javascript">
+			var currentmarker;
+			var coordsList = [];
+
+			var styles = [
+				{
+					"featureType": "water",
+					"stylers": [
+						{ "color": "#ffffff" }
+					]
+				}, {
+					"featureType": "landscape",
+					"stylers": [
+						{ "color": "#ABA881" }
+					]
+				}, {
+					"featureType": "administrative",
+					"elementType": "labels.text.fill",
+					"stylers": [
+						{ "visibility": "on" },
+						{ "color": "#000000" }
+					]
+				}, {
+					"featureType": "poi.park",
+					"stylers": [
+					  { "visibility": "off" }
+					]
+				},{
+					"featureType": "transit",
+					"stylers": [
+					  { "visibility": "off" }
+					]
+				},{
+					"featureType": "administrative.locality",
+					"elementType": "labels",
+					"stylers": [
+						{ "visibility": "off" }
+					]
+				}, {
+					"featureType": "administrative.country",
+					"stylers": [
+						{ "visibility": "on" }
+					]
+				}
+			];
+			
+			var map;
+			var x = 0;
+			//NA
+			coordsList.push({ lat: 34.0488240, lon: -118.2513420 });
+			coordsList.push({ lat: 46.0730555556, lon: -100.546666667 });
+			coordsList.push({ lat: 40.7736160, lon: -73.9835600 });
+			//JP
+			coordsList.push({ lat: 35.692553, lon: 139.691073 });
+			coordsList.push({ lat: 35.64581, lon: 139.722607 });
+			//EU
+			coordsList.push({ lat: 51.485581, lon: -0.181996 });
+			coordsList.push({ lat: 51.5137, lon: -0.14262 });
+			function loadCuisines() {
+				$.mockJSON(/boo\.json/, {
+					"data|10-10": [
+						{
+							"CuisineName": "@LOREM",
+							"CurrentReservationCount|650-999": 0
+						}
+					]
+				});
+
+				$.getJSON('boo/boo.json', function (json) {
+					$("#list").empty();
+					$.each(json.data, function (index, item) {
+						var ele = $('<div/>', {"class": "listItem"}).text(item.CuisineName + " - " + item.CurrentReservationCount);
+						$("#list").append(ele);
+					});
+				});
+			};
+
+			function initialize() {
+				var mapOptions = {
+					center: new google.maps.LatLng(46.0730555556, -100.546666667),
+					zoom: 4,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				map = new google.maps.Map(document.getElementById("map-canvas"),
+					mapOptions);
+				
+				map.setOptions({ styles: styles });
+
+				StartAnimations();
+			}
+
+			function StartAnimations() {
+				var maxIndex = coordsList.length;
+
+				if (x === maxIndex) {
+					x = 0;
+				}
+
+				var myLatlng = new google.maps.LatLng(coordsList[x].lat, coordsList[x].lon);
+				
+				var image = {
+					url: 'Content/img/1364380262_onebit_09.png',
+					size: new google.maps.Size(48, 48),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(10, 48)
+				};
+
+				var marker = new google.maps.Marker({
+					position: myLatlng,
+					map: map,
+					icon: image
+				});
+				currentmarker = marker;
+				x += 1;
+
+				window.setTimeout(RemoveMarker, 1000);
+			}
+
+			function RemoveMarker() {
+				currentmarker.setMap(null);
+				StartAnimations();
+			}
+
+			function LoadCoordinates() {
+				$.getJSON('foo/foo.json', function (json) {
+					for (var index = 0, length = json.restaurants.length; index < length; index++) {
+						var rest = json.restaurants[index];
+						coordsList.push({ lat: rest.Latitude, lon: rest.Longitude });
+					}
+				});
+			}
+
+			$(document).ready(function () {
+				initialize();
+				loadCuisines();
+			});
+			
+
+		</script>
+	</body>
+</html>

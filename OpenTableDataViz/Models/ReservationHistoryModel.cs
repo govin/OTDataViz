@@ -14,8 +14,8 @@
 
 		public long AvgPartySize { get; set; }
 
-		//public string Location { get; set; }
+		public string Location { get; set; }
 
-		//public string RestaurantName { get; set; }
+		public string RestaurantName { get; set; }
 	}
 }

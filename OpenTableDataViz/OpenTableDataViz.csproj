@@ -175,7 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
-    <Compile Include="Api\BubbleChartNAController.cs" />
+    <Compile Include="Api\BubbleChartController.cs" />
+    <Compile Include="Api\LiveResoFeedController.cs" />
     <Compile Include="Api\RadialChartController.cs" />
     <Compile Include="Api\ReservationHistoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -216,7 +217,10 @@
     <Compile Include="Services\BusinessQueryService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BubbleChart.html" />
+    <Content Include="BubbleChartEU.html" />
+    <Content Include="BubbleChartJP.html" />
+    <Content Include="BubbleChartNA.html" />
+    <Content Include="Content\img\1364380262_onebit_09.png" />
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\kendo.common.min.css" />
     <Content Include="Content\kendo.dataviz.css" />
@@ -276,11 +280,15 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="LiveReservationMap.html" />
     <Content Include="MotionChart.html" />
+    <Content Include="ReservationMap.html" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\d3.min.js" />
+    <Content Include="Scripts\Internal\EuStartUp.js" />
     <Content Include="Scripts\Internal\BubbleViewModel.js" />
     <Content Include="Scripts\Internal\DSProxy.js" />
+    <Content Include="Scripts\Internal\JpStartUp.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
@@ -288,6 +296,7 @@
     <Content Include="Scripts\jquery.mockjson.js" />
     <Content Include="Scripts\kendo.all.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\Internal\NaStartUp.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

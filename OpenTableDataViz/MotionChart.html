@@ -61,9 +61,8 @@
 			$.getJSON('api/ReservationHistory', function (json) {
 				for (var index = 0, length = json.length; index < length; index++) {
 					var rest = json[index];
-					var name = "restarant" + rest.Rid;
 					var dt = new Date(rest.ShiftDate);
-					rows.push([name, dt, rest.ResoCount, rest.AvgPartySize, "random"]);
+					rows.push([rest.RestaurantName, dt, rest.ResoCount, rest.AvgPartySize, rest.Location]);
 				}
 				// this will be mocked
 				data.addRows(rows);

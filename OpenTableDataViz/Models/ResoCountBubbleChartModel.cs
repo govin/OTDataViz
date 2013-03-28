@@ -12,5 +12,7 @@ namespace OpenTableDataViz.Models
 		public long ReservationCount { get; set; }
 
 		public string Location { get; set; }
+
+		//public string LocationId { get; set; }
 	}
 }

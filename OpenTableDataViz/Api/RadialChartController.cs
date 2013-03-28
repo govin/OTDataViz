@@ -6,6 +6,7 @@ using System.Web;
 namespace OpenTableDataViz.Api
 {
 	using System.Net.Http;
+	using System.Web.Http;
 
 	using OpenTableDataViz.Services;
 
@@ -13,18 +14,30 @@ namespace OpenTableDataViz.Api
 	{
 		private IBusinessQuery query;
 
+		private IAppConfiguration config;
+
 		public RadialChartController()
 		{
 		}
 
-		public RadialChartController(IBusinessQuery query)
+		public RadialChartController(IBusinessQuery query, IAppConfiguration configuration)
 		{
 			this.query = query;
+			this.config = configuration;
 		}
 
-		public HttpResponseMessage Get()
+		[HttpGet]
+		public HttpResponseMessage Get(string region)
 		{
-			return this.GetResponse(this.query.GetCuisineRadialChartData(24));
+			switch (region.ToLower().Trim())
+			{
+				case "eu":
+					return this.GetResponse(this.query.GetCuisineRadialChartData(15, this.config.ResoFeedUrlEU));
+				case "asia":
+					return this.GetResponse(this.query.GetCuisineRadialChartData(15, this.config.ResoFeedUrlAsia));
+				default:
+					return this.GetResponse(this.query.GetCuisineRadialChartData(15, config.ResoFeedUrlNA));
+			}
 		}
 	}
 }

@@ -37,10 +37,7 @@ namespace OpenTableDataViz
 		}
 
 		private void CacheRestaurants()
-		{
-			//var entityOp = new EntityOpService(new LoggingService(), new AppConfigurationService());
-			//var resoFeed = entityOp.GetEntity<ResoFeedModel>("http://feeds-na.otcorp.opentable.com/reservations/created/");
-			
+		{	
 			var queryService = (IBusinessQuery)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(IBusinessQuery));
 			var restaurants = queryService.GetAllRestaurants();
 			var cacheService = (ICacheService)GlobalConfiguration.Configuration.DependencyResolver.GetService(typeof(ICacheService));

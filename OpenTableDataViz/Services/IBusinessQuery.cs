@@ -14,10 +14,14 @@ namespace OpenTableDataViz.Services
 
 		Dictionary<long, RestaurantModel> GetAllRestaurants();
 
-		List<ResoFeedModel> GetReservationsMadeInTheLastXMinutes(int xminutes);
+		List<Reservation> GetReservationsForLastXMinutes(int timeToGoBackInPastMinutes, string url);
 
-		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes);
+		List<ResoFeedModel> GetResoFeedsForLastXMinutes(int xminutes, string url);
 
-		List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes);
+		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url);
+
+		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url, string metroArea);
+
+		List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes, string url);
 	}
 }
