@@ -41,38 +41,38 @@
 			//foo/foo.json
 			var rows = [];
 			// request JSON as usual
-			//$.getJSON('api/ReservationHistory', function (json) {
-			//	for(var index = 0, length = json.restaurants.length; index < length; index++) {
-			//		var rest = json.restaurants[index];
-			//		var name = rest.name + Math.floor((Math.random() * 100) + 1);
-			//		var dt = new Date(1988, 0, 1);
-			//		var dt1 = new Date(1988, 1, 1);
-			//		rows.push([name, dt, rest.reservationcount, rest.avgpartysize, rest.location]);
-			//		var resoCountAdjustment = Math.floor((Math.random() * 100) + 1);
-			//		if (resoCountAdjustment % 2 == 0) resoCountAdjustment = resoCountAdjustment * -1;
-			//		var psAdjustment = Math.floor((Math.random() * 10) + 1) % 2;
-			//		if (psAdjustment % 2 == 0) psAdjustment = psAdjustment * -1;
-			//		rows.push([name, dt1, rest.reservationcount + resoCountAdjustment, rest.avgpartysize + psAdjustment, rest.location]);
-			//	}
-			//	// this will be mocked
-			//});
-			
-
-			$.getJSON('api/ReservationHistory', function (json) {
-				for (var index = 0, length = json.length; index < length; index++) {
-					var rest = json[index];
-					var dt = new Date(rest.ShiftDate);
-					rows.push([rest.RestaurantName, dt, rest.ResoCount, rest.AvgPartySize, rest.Location]);
+			$.getJSON('foo.json', function (json) {
+				for(var index = 0, length = json.restaurants.length; index < length; index++) {
+					var rest = json.restaurants[index];
+					var name = rest.name + Math.floor((Math.random() * 100) + 1);
+					var dt = new Date(1988, 0, 1);
+					var dt1 = new Date(1988, 1, 1);
+					rows.push([name, dt, rest.reservationcount, rest.avgpartysize, rest.location]);
+					var resoCountAdjustment = Math.floor((Math.random() * 100) + 1);
+					if (resoCountAdjustment % 2 == 0) resoCountAdjustment = resoCountAdjustment * -1;
+					var psAdjustment = Math.floor((Math.random() * 10) + 1) % 2;
+					if (psAdjustment % 2 == 0) psAdjustment = psAdjustment * -1;
+					rows.push([name, dt1, rest.reservationcount + resoCountAdjustment, rest.avgpartysize + psAdjustment, rest.location]);
 				}
-				// this will be mocked
 				data.addRows(rows);
 				var motionchart = new google.visualization.MotionChart(
 				document.getElementById('visualization'));
-				motionchart.draw(data, { 'width': 800, 'height': 400 });
+				motionchart.draw(data, { 'width': 1600, 'height': 1000 });
 			});
 			
-			
-			
+
+			//$.getJSON('api/ReservationHistory', function (json) {
+			//	for (var index = 0, length = json.length; index < length; index++) {
+			//		var rest = json[index];
+			//		var dt = new Date(rest.ShiftDate);
+			//		rows.push([rest.RestaurantName, dt, rest.ResoCount, rest.AvgPartySize, rest.Location]);
+			//	}
+			//	// this will be mocked
+			//	data.addRows(rows);
+			//	var motionchart = new google.visualization.MotionChart(
+			//	document.getElementById('visualization'));
+			//	motionchart.draw(data, { 'width': 800, 'height': 400 });
+			//});
 		}
 
 
@@ -80,7 +80,7 @@
 	</script>
 </head>
 <body style="font-family: Arial; border: 0 none;">
-	<div id="visualization" style="width: 800px; height: 400px;"></div>
+	<div id="visualization" style="width: 1200px; height: 800px;"></div>
 </body>
 </html>
 ​

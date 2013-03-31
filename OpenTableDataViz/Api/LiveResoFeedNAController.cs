@@ -9,17 +9,17 @@ namespace OpenTableDataViz.Api
 {
 	using OpenTableDataViz.Services;
 
-	public class LiveResoFeedController : BaseApiController
+	public class LiveResoFeedNAController : BaseApiController
 	{
 		private IBusinessQuery liveresofeed;
 		
 		private IAppConfiguration config;
 
-		public LiveResoFeedController()
+		public LiveResoFeedNAController()
 		{
 		}
 
-		public LiveResoFeedController(IBusinessQuery liveresofeed, IAppConfiguration config)
+		public LiveResoFeedNAController(IBusinessQuery liveresofeed, IAppConfiguration config)
 		{
 			this.liveresofeed = liveresofeed;
 			this.config = config;

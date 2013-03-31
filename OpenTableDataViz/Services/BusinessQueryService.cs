@@ -3,14 +3,9 @@ namespace OpenTableDataViz.Services
 	using System;
 	using System.Collections.Generic;
 	using System.IO;
-
-	using LumenWorks.Framework.IO.Csv;
-
-	using MongoDB.Driver;
-
-	using OpenTableDataViz.Models;
-
 	using System.Linq;
+	using LumenWorks.Framework.IO.Csv;
+	using OpenTableDataViz.Models;
 
 	public class BusinessQueryService : IBusinessQuery
 	{
@@ -71,8 +66,8 @@ namespace OpenTableDataViz.Services
 		{
 			var restaurantDictionary = new Dictionary<long, RestaurantModel>();
 			this.ReadRestaurantsFromCsvFile(appConfiguration.RestaurantCsvFileLocation, ref restaurantDictionary);
-			this.ReadRestaurantsFromCsvFile("c:\\DataViz\\Restaurants_EU_Mar_27.csv", ref restaurantDictionary);
-			this.ReadRestaurantsFromCsvFile("c:\\DataViz\\Restaurants_Asia_Mar_27.csv", ref restaurantDictionary);
+			this.ReadRestaurantsFromCsvFile("C:\\Users\\dbarrett.OPENTABLE.COM\\Documents\\DataViz\\Restaurants_EU_Mar_27.csv", ref restaurantDictionary);
+			this.ReadRestaurantsFromCsvFile("C:\\Users\\dbarrett.OPENTABLE.COM\\Documents\\DataViz\\Restaurants_Asia_Mar_27.csv", ref restaurantDictionary);
 			return restaurantDictionary;
 		}
 

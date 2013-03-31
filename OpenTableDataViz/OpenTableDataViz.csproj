@@ -176,7 +176,9 @@
   <ItemGroup>
     <Compile Include="Api\BaseApiController.cs" />
     <Compile Include="Api\BubbleChartController.cs" />
-    <Compile Include="Api\LiveResoFeedController.cs" />
+    <Compile Include="Api\LiveResoFeedJPController.cs" />
+    <Compile Include="Api\LiveResoFeedEUController.cs" />
+    <Compile Include="Api\LiveResoFeedNAController.cs" />
     <Compile Include="Api\RadialChartController.cs" />
     <Compile Include="Api\ReservationHistoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
