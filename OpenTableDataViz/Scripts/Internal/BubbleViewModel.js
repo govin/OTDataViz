@@ -1,6 +1,13 @@
-﻿var BubbleViewModel = function(bubbleChartUrl, radialChartUrl) {
+﻿var BubbleViewModel = function(options) {
 	var self = this;
 
+	this.displayBackButton = false;
+	this.neighborhoodLabel = options.neighborhoodLabel;
+	this.metroLabel = options.metroLabel;
+	this.backLabel = options.backLabel;
+	this.bubbleChartUrl = options.bubbleChartUrl;
+	this.radialChartUrl = options.radialChartUrl;
+	
 	$.mockJSON.data.US_STATE = [
 			'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS',
 			'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
@@ -18,11 +25,13 @@
 		]
 	});
 
-	this.bubbleChartUrl = bubbleChartUrl;
-
-	this.radialChartUrl = radialChartUrl;
-
-	this.loadRadials = function () {
+	this.loadRadials = function (id) {
+		
+		var url = self.radialChartUrl;
+		if (typeof id !== "undefined" && id !== null) {
+			url += "&metro=" + id;
+		}
+		
 		//$.mockJSON(/boo\.json/, {
 		//	"data|3-3": [
 		//		{
@@ -41,7 +50,7 @@
 		//	$("#thirdRadialText").text(json.data[2].CuisineName);
 		//});
 		
-		$.getJSON(this.radialChartUrl, function (data) {
+		$.getJSON(url, function (data) {
 			$("#firstRadial").data("kendoRadialGauge").value(data[0].ReservationCount);
 			$("#secondRadial").data("kendoRadialGauge").value(data[1].ReservationCount);
 			$("#thirdRadial").data("kendoRadialGauge").value(data[2].ReservationCount);
@@ -118,12 +127,25 @@
 		$("#list").empty();
 
 		locationData.sort(self.sortByCount);
+		
+		if (self.displayBackButton) {
+			var backBtn = $('<div/>', { "class": "backButton" })
+				.text(self.backLabel)
+				.click(function() {
+					self.displayBackButton = false;
+					self.getBubbleData();
+				});
+			$("#list").append(backBtn);
+			$("#area").text(self.neighborhoodLabel);
+			$("#list").off("click", ".location");
+		} else {
+			$("#list").on("click", ".location", viewModel.fetchData);
+			$("#area").text(self.metroLabel);
+		}
+
 		$.each(locationData, function(index, loc) {
-			var ele = $('<div/>', { "style": "background-color:" + loc.color + ";", "class": "location" }).text(loc.location + " - " + loc.count);
+			var ele = $('<div/>', { "style": "background-color:" + loc.color + ";", "class": "location", "id":"item"+index }).text(loc.location + " - " + loc.count);
 			$(ele).data("id", loc.location);
-			$(ele).click(function() {
-				self.getBubbleData(loc.location);
-			});
 			$("#list").append(ele);
 		});
 	};
@@ -148,8 +170,10 @@
 		});
 	};
 
-	//this.fetchData = function() {
-	//	var id = $(this).data["id"];
-	//	self.getBubbleData(id);
-	//};
+	this.fetchData = function(event) {
+		var id = $(event.target).data("id");
+		self.getBubbleData(id);
+		self.loadRadials(id);
+		self.displayBackButton = true;
+	};
 };

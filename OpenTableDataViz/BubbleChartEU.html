@@ -1,127 +1,24 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-	
 	<head>
 		<link href="Content/kendo.common.min.css" rel="stylesheet" />
 		<link href="Content/kendo.dataviz.css" rel="stylesheet" />
 		<title>OpenTable Daily Stats</title>
-		<style>
-
-			text {
-				font: 10px sans-serif;
-			}
-
-			.logo{
-				margin-top: 15px;
-			}
-
-			body {
-				width: 1135px;
-				margin-left: auto;
-				margin-right: auto;
-			}
-
-			.header {
-				width: 1135px;
-				height: 75px;
-				text-align: center;
-			}
-
-			.bubbleBox {
-				height: 658px;
-				margin-bottom: 10px;
-				border: solid 1px gray;
-				border-radius: 10px;
-				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
-				-moz-box-shadow: 5px 8px 8px #D9D9D9;
-				box-shadow: 5px 8px 8px #D9D9D9;
-				float: left;
-			}
-
-			.innerBubble{
-				float:left;
-			}
-
-			#list {
-				width: 300px;
-				height: 604px;
-				margin-left: 10px;
-				padding: 2px 2px 2px 2px;
-				overflow: hidden;
-			}
-
-			.clear{
-				clear:both;
-			}
-
-			.radialBox {
-				width: 200px;
-				height: 658px;
-				border: solid 1px gray;
-				border-radius: 10px;
-				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
-				-moz-box-shadow: 5px 8px 8px #D9D9D9;
-				box-shadow: 5px 8px 8px #D9D9D9;
-				float: left;
-				margin-left: 15px;
-			}
-
-			.radial {
-				float: left;
-				height: 175px;
-				width: 200px;
-			}
-
-			.radialLabelBox {
-				display: inline-block;
-				height: 20px;
-				width: 200px;
-			}
-
-			.radialLabel {
-				display: block;
-				text-align: center;
-				font-weight: bold;
-			}
-
-			.bubbleLabelBox{
-				height: 50px;
-				width: 100%;
-			}
-			
-			.radialHeaderLabelBox{
-				height: 50px;
-				width: 200px;
-				float: left;
-			}
-
-			.bubbleLabelBox span{
-				display:block;
-				padding: 14px 4px 4px 150px;
-				font-weight:bold;
-			}
-
-			.radialHeaderLabelBox span{
-				display:block;
-				padding: 14px 4px 4px 4px;
-				font-weight:bold;
-				text-align:center;
-			}
-
-			.location {
-				margin: 2px 0 2px 0;
-				padding: 4px 0 4px 6px;
-				border-radius: 4px;
-			}
-
-		</style>
+		<link href="Content/bubble.css" rel="stylesheet" />
 	</head>
 	<body>
 		<div class="header">
-			<img class="logo" src="Content/img/Logo.png" />
+			<span>Top European Restaurants</span>
 		</div>
 		<div class="bubbleBox">
-			<div class="clear bubbleLabelBox"><span>Top Restaurants</span></div>
+			<div class="clear bubbleLabelBox">
+				<div id="bodyLabelBox">
+					<span>Restaurants</span>
+				</div>
+				<div id="areaLabelBox">
+					<span id="area">Metro</span>
+				</div>
+			</div>
 			<div id="chart" class="innerBubble"></div>
 			<div id="list" class="innerBubble"></div>
 			<div class="clear"></div>
@@ -143,8 +40,9 @@
 				<div id="thirdRadial" class="radial"></div>
 			</div>
 		</div>
-		<button id="loadCharts">Load the charts</button>
-		<button id="loadRadials">Load the radials</button>
+		<div id="data">
+			<span id="dataLabel">* past 15 minutes worth of data used</span>
+		</div>
 		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
 		<script type="text/javascript" src="Scripts/d3.min.js"></script>

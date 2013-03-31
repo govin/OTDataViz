@@ -9,33 +9,42 @@ $(document).ready(function () {
 	});
 	$("#firstRadial, #secondRadial, #thirdRadial").kendoRadialGauge({
 		scale: {
-			minorUnit: 50,
+			minorUnit: 25,
 			majorUnit: 100,
 			startAngle: -30,
 			endAngle: 210,
-			max: 1000,
+			max: 600,
 			labels: {
 				position: "outside"
 			},
 			ranges: [
 				{
 					from: 0,
-					to: 300,
+					to: 200,
 					color: "#31A354"
 				}, {
-					from: 300,
-					to: 700,
+					from: 200,
+					to: 400,
 					color: "#ff7a00"
 				}, {
-					from: 700,
-					to: 1000,
+					from: 400,
+					to: 600,
 					color: "#c20000"
 				}
 			]
 		}
 	});
-	viewModel = new BubbleViewModel("api/BubbleChart?region=eu", "api/RadialChart?region=eu");
+	
+
+	var options =
+	{
+		bubbleChartUrl: "api/BubbleChart?region=eu",
+		radialChartUrl: "api/RadialChart?region=eu",
+		neighborhoodLabel: "Neighborhood",
+		backLabel: "<<<     Back",
+		metroLabel: "Metro"
+	};
+	viewModel = new BubbleViewModel(options);
 	viewModel.getBubbleData();
 	viewModel.loadRadials();
-	$("#list").on("click", ".location", viewModel.fetchData);
 });

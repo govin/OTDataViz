@@ -34,8 +34,16 @@ $(document).ready(function () {
 			]
 		}
 	});
-	viewModel = new BubbleViewModel("api/BubbleChart?region=na", "api/RadialChart?region=na");
+	var options =
+	{
+		bubbleChartUrl: "api/BubbleChart?region=na",
+		radialChartUrl: "api/RadialChart?region=na",
+		neighborhoodLabel: "Neighborhood",
+		backLabel: "<<<     Back",
+		metroLabel: "Metro"
+	};
+	
+	viewModel = new BubbleViewModel(options);
 	viewModel.getBubbleData();
 	viewModel.loadRadials();
-	//$("#list").on("click",".location", viewModel.fetchData);
 });

@@ -1,0 +1,139 @@
+﻿text {
+				font: 10px sans-serif;
+			}
+
+			body {
+				width: 1135px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+.header {
+	width: 1135px;
+	height: 75px;
+	text-align: center;
+	background-image: url(../Content/img/Logo.png);
+	background-position: left;
+	background-repeat: no-repeat;
+}
+
+.header span {
+	font-size: 2.5em;
+	padding-top: 18px;
+	font-weight: bold;
+	display: block;
+}
+
+			.bubbleBox {
+				height: 658px;
+				width: 914px;
+				margin-bottom: 10px;
+				border: solid 1px gray;
+				border-radius: 10px;
+				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
+				-moz-box-shadow: 5px 8px 8px #D9D9D9;
+				box-shadow: 5px 8px 8px #D9D9D9;
+				float: left;
+			}
+
+			.innerBubble{
+				float:left;
+			}
+
+			#list {
+				width: 300px;
+				height: 604px;
+				margin-left: 10px;
+				padding: 2px 2px 2px 2px;
+				overflow: hidden;
+			}
+
+			.clear{
+				clear:both;
+			}
+
+			.radialBox {
+				width: 200px;
+				height: 658px;
+				border: solid 1px gray;
+				border-radius: 10px;
+				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
+				-moz-box-shadow: 5px 8px 8px #D9D9D9;
+				box-shadow: 5px 8px 8px #D9D9D9;
+				float: left;
+				margin-left: 15px;
+			}
+
+			.radial {
+				float: left;
+				height: 175px;
+				width: 200px;
+			}
+
+			.radialLabelBox {
+				display: inline-block;
+				height: 20px;
+				width: 200px;
+			}
+
+			.radialLabel {
+				display: block;
+				text-align: center;
+				font-weight: bold;
+			}
+
+			.bubbleLabelBox{
+				height: 50px;
+				width: 100%;
+			}
+			
+			.radialHeaderLabelBox{
+				height: 50px;
+				width: 200px;
+				float: left;
+			}
+
+.bubbleLabelBox span {
+	display: block;
+	padding: 14px 0px 4px 0px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.radialHeaderLabelBox span {
+	display: block;
+	padding: 14px 4px 4px 4px;
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.location {
+	margin: 2px 0 2px 0;
+	padding: 4px 0 4px 6px;
+	border-radius: 4px;
+}
+
+#bodyLabelBox {
+	width: 610px;
+	float: left;
+}
+
+#areaLabelBox {
+	width: 300px;
+	float: left;
+}
+
+span {
+	 font-family: monospace;
+}
+
+#data {
+	clear: both;
+}
+
+#dataLabel {
+	font-size: .5em;
+}

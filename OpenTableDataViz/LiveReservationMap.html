@@ -87,14 +87,17 @@
 				var naUpdate = 0;
 				$.getJSON('api/LiveResoFeedNA', function (data) {
 					var reservations = data;
-					var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
-					var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
-					naUpdate = firstDateMade.getTime() - lastDateMade.getTime();
-					animate(reservations);
+					if (reservations.length > 0) {
+						var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+						var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+						naUpdate = firstDateMade.getTime() - lastDateMade.getTime();
+						animate(reservations);
+					}
 				});
 				
 				if (naUpdate < 60000)
 					naUpdate = 60000;
+				
 				window.setTimeout(function () {
 					loadNAReservations();
 				}, naUpdate - 500);
@@ -104,14 +107,18 @@
 				var jpUpdate = 0;
 				$.getJSON('api/LiveResoFeedJP', function (data) {
 					var reservations = data;
-					var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
-					var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
-					jpUpdate = firstDateMade.getTime() - lastDateMade.getTime();
-					animate(reservations);
+					if (reservations.length > 0) {
+						var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+						var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+						jpUpdate = firstDateMade.getTime() - lastDateMade.getTime();
+						animate(reservations);
+					}
+
 				});
 
 				if (jpUpdate < 60000)
 					jpUpdate = 60000;
+				
 				window.setTimeout(function () {
 					loadJPReservations();
 				}, jpUpdate - 500);
@@ -121,14 +128,17 @@
 				var euUpdate = 0;
 				$.getJSON('api/LiveResoFeedEU', function (data) {
 					var reservations = data;
-					var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
-					var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
-					euUpdate = firstDateMade.getTime() - lastDateMade.getTime();
-					animate(reservations);
+					if (reservations.length > 0) {
+						var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+						var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+						euUpdate = firstDateMade.getTime() - lastDateMade.getTime();
+						animate(reservations);
+					}
 				});
 				
 				if (euUpdate < 60000)
 					euUpdate = 60000;
+				
 				window.setTimeout(function () {
 					loadEUReservations();
 				}, euUpdate - 500);
@@ -159,11 +169,11 @@
 			}
 			
 			function setMapCoordinates() {
-				var lang = navigator.language;
+				var userLang = (navigator.language) ? navigator.language : navigator.userLanguage;
 				var width = $("body").width();
 				
-				if (width < 1825) {
-					switch (lang.toLowerCase()) {
+				if (width < 1900) {
+					switch (userLang.toLowerCase()) {
 						case "en-gb":
 						case "de-de":
 							lat = 53.81;
@@ -198,10 +208,6 @@
 				for (var i = 0, l = reservations.length; i < l; i++) {
 					doSetTimeout(reservations[i], times[i]);
 				}
-				
-				for(var j = 0; j < times.length; j++) {
-					console.log(times[j]);
-				}
 			}
 			
 			function doSetTimeout(reso, time) {
@@ -220,7 +226,7 @@
 					position: myLatlng,
 					map: map,
 					icon: image,
-					title: reso.RestaurantName
+					title: reso.RestaurantName + " - " + reso.Partysize
 				});
 
 				window.setTimeout(function () { marker.setMap(null);}, 3000);
@@ -228,7 +234,6 @@
 
 			$(document).ready(function () {
 				initializeMap();
-
 				window.setTimeout(function() {
 					loadNAReservations();
 				}, 0);

@@ -1,0 +1,269 @@
+﻿@{
+	ViewBag.Title = "OpenTable Live Reservation Map";
+}
+
+@section styles{
+	<style type="text/css">
+		html {
+			height: 100%
+		}
+
+		body {
+			height: 100%; margin: 0; padding: 0
+		}
+
+		#map-canvas {
+			height: 100%;
+			position: relative;
+		}
+
+		#header {
+			height: 100px;
+			min-height: 75px;
+			position: absolute;
+			z-index: 1;
+			background-color: white;
+			width: 100%;
+			opacity: .7;
+		}
+
+		.headerMessage {
+			display: block;
+			text-align: left;
+			font-size: 2em;
+			font-family: monospace;
+			padding-top: 30px;
+			padding-left: 249px;
+			font-weight: bold;
+		}
+
+		.logo {
+			height: 100%;
+			width: 100%;
+			background-image: url(../Content/img/Logo.png);
+			background-position: left;
+			background-repeat: no-repeat;
+			float: left;
+			opacity: 1;
+			border-bottom: solid 1px red;
+		}
+
+		.delayMessage {
+			display: block;
+			width: 100%;
+			opacity: 1;
+			text-align: right;
+			padding-top: 22px;
+			font-size: .7em;
+		}
+
+	</style>
+}
+
+@section scripts{
+	<script type="text/javascript"
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZCTMWJsQWIIrJreyd2ly2AzsOusVtfs&sensor=false">
+	</script>
+		
+	<script type="text/javascript">
+		var map;
+		var lat = 38.7;
+		var lon = -9.18;
+		var zoom = 3;
+
+		function loadNAReservations() {
+			DSProxy.DoAjax("api/LiveResoFeedNA", "GET", null, loadNAReservationsSuccess, null, null, true);		
+		};
+		
+		function loadNAReservationsSuccess(data) {
+			var update = 0;
+			var reservations = data;
+			if (reservations.length > 0) {
+				var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+				var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+				update = firstDateMade.getTime() - lastDateMade.getTime();
+				animate(reservations);
+			}
+			if (update < 60000)
+				update = 60000;
+
+			window.setTimeout(function () {
+				loadNAReservations();
+			}, update - 500);
+		}
+		
+		function loadNAReservationsError(data) {
+			window.setTimeout(function () {
+				loadNAReservations();
+			}, 120000);
+		}
+		
+
+		function loadJPReservations() {
+			DSProxy.DoAjax("api/LiveResoFeedJP", "GET", null, loadNAReservationsSuccess, null, null, true);
+		};
+
+		function loadJPReservationsSuccess(data) {
+			var update = 0;
+			var reservations = data;
+			if (reservations.length > 0) {
+				var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+				var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+				update = firstDateMade.getTime() - lastDateMade.getTime();
+				animate(reservations);
+			}
+			if (update < 60000)
+				update = 60000;
+
+			window.setTimeout(function () {
+				loadNAReservations();
+			}, update - 500);
+		}
+
+		function loadJPReservationsError(data) {
+			window.setTimeout(function () {
+				loadJPReservations();
+			}, 120000);
+		}
+
+		function loadEUReservations() {
+			DSProxy.DoAjax("api/LiveResoFeedEU", "GET", null, loadNAReservationsSuccess, null, null, true);
+		};
+
+		function loadEUReservationsSuccess(data) {
+			var update = 0;
+			var reservations = data;
+			if (reservations.length > 0) {
+				var firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+				var lastDateMade = new Date(reservations[reservations.length - 1].DateMadeUtc + "Z");
+				update = firstDateMade.getTime() - lastDateMade.getTime();
+				animate(reservations);
+			}
+			if (update < 60000)
+				update = 60000;
+
+			window.setTimeout(function () {
+				loadNAReservations();
+			}, update - 500);
+		}
+
+		function loadEUReservationsError(data) {
+			window.setTimeout(function () {
+				loadEUReservations();
+			}, 120000);
+		}
+
+		function initializeMap() {
+
+			setMapCoordinates();
+
+			var mapOptions = {
+				center: new google.maps.LatLng(lat, lon),
+				zoom: zoom,
+				mapTypeId: google.maps.MapTypeId.TERRAIN,
+				streetViewControl: false,
+				mapTypeControl: false,
+				zoomControl: true,
+				zoomControlOptions: {
+					position: google.maps.ControlPosition.LEFT_BOTTOM
+				},
+				panControl: true,
+				panControlOptions: {
+					position: google.maps.ControlPosition.LEFT_BOTTOM
+				},
+				scaleControl: false
+			};
+			map = new google.maps.Map(document.getElementById("map-canvas"),
+				mapOptions);
+		}
+
+		function setMapCoordinates() {
+			var userLang = (navigator.language) ? navigator.language : navigator.userLanguage;
+			var width = $("body").width();
+
+			if (width < 1825) {
+				switch (userLang.toLowerCase()) {
+				case "en-gb":
+				case "de-de":
+					lat = 53.81;
+					lon = 4.43;
+					zoom = 6;
+					break;
+				case "ja-jp":
+					lat = 39.41;
+					lon = 136;
+					zoom = 6;
+					break;
+				default:
+					lat = 48.17;
+					lon = -100.17;
+					zoom = 4;
+					break;
+				}
+			}
+		}
+
+		function animate(reservations) {
+			var firstDateMade;
+			var times = [];
+			if (reservations.length > 0)
+				firstDateMade = new Date(reservations[0].DateMadeUtc + "Z");
+			for (var index = 0, length = reservations.length; index < length; index++) {
+				var dateMade = new Date(reservations[index].DateMadeUtc + "Z");
+				var timeElapsedMs = firstDateMade.getTime() - dateMade.getTime();
+				times.push(timeElapsedMs);
+			}
+
+			for (var i = 0, l = reservations.length; i < l; i++) {
+				doSetTimeout(reservations[i], times[i]);
+			}
+		}
+
+		function doSetTimeout(reso, time) {
+			setTimeout(function () { placeMarker(reso); }, time);
+		}
+
+		function placeMarker(reso) {
+			var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
+			var image = {
+				url: '../Content/img/1364380262_onebit_09.png',
+				size: new google.maps.Size(48, 48),
+				origin: new google.maps.Point(0, 0),
+				anchor: new google.maps.Point(10, 48)
+			};
+			var marker = new google.maps.Marker({
+				position: myLatlng,
+				map: map,
+				icon: image,
+				title: reso.RestaurantName + " - " + reso.Partysize
+			});
+
+			window.setTimeout(function () { marker.setMap(null); }, 3000);
+		}
+
+		$(document).ready(function () {
+			initializeMap();
+			window.setTimeout(function () {
+				loadNAReservations();
+			}, 0);
+			window.setTimeout(function () {
+				loadEUReservations();
+			}, 1000);
+			window.setTimeout(function () {
+				loadJPReservations();
+			}, 1500);
+		});
+
+	</script>
+}
+
+<div id="header">
+	<div class="logo">
+		<span class="headerMessage">Reservations By The Minute</span>
+		<span class="delayMessage">*delayed by 2-5 minutes</span>
+	</div>
+	<div id="list"></div>
+</div>
+<div id="map-canvas" />
+
+
