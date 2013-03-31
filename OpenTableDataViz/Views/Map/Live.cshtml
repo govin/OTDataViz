@@ -231,6 +231,12 @@
 				origin: new google.maps.Point(0, 0),
 				anchor: new google.maps.Point(10, 48)
 			};
+
+			if (reso.Partysize > 4 && reso.Partysize < 8)
+				image.url = '../Content/img/1364380262_onebit_09.png';
+			else if (reso.Partysize > 8)
+				image.url = '../Content/img/1364380262_onebit_09.png';
+			
 			var marker = new google.maps.Marker({
 				position: myLatlng,
 				map: map,
