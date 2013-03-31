@@ -2,63 +2,7 @@
 	ViewBag.Title = "OpenTable Live Reservation Map";
 }
 
-@section styles{
-	<style type="text/css">
-		html {
-			height: 100%
-		}
 
-		body {
-			height: 100%; margin: 0; padding: 0
-		}
-
-		#map-canvas {
-			height: 100%;
-			position: relative;
-		}
-
-		#header {
-			height: 100px;
-			min-height: 75px;
-			position: absolute;
-			z-index: 1;
-			background-color: white;
-			width: 100%;
-			opacity: .7;
-		}
-
-		.headerMessage {
-			display: block;
-			text-align: left;
-			font-size: 2em;
-			font-family: monospace;
-			padding-top: 30px;
-			padding-left: 249px;
-			font-weight: bold;
-		}
-
-		.logo {
-			height: 100%;
-			width: 100%;
-			background-image: url(../Content/img/Logo.png);
-			background-position: left;
-			background-repeat: no-repeat;
-			float: left;
-			opacity: 1;
-			border-bottom: solid 1px red;
-		}
-
-		.delayMessage {
-			display: block;
-			width: 100%;
-			opacity: 1;
-			text-align: right;
-			padding-top: 22px;
-			font-size: .7em;
-		}
-
-	</style>
-}
 
 @section scripts{
 	<script type="text/javascript"
@@ -226,16 +170,16 @@
 		function placeMarker(reso) {
 			var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
 			var image = {
-				url: '../Content/img/1364380262_onebit_09.png',
-				size: new google.maps.Size(48, 48),
+				url: '../Content/img/green_pin.png',
+				size: new google.maps.Size(45, 67),
 				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(10, 48)
+				anchor: new google.maps.Point(22, 67)
 			};
 
 			if (reso.Partysize > 4 && reso.Partysize < 8)
-				image.url = '../Content/img/1364380262_onebit_09.png';
+				image.url = '../Content/img/orange_pin.png';
 			else if (reso.Partysize > 8)
-				image.url = '../Content/img/1364380262_onebit_09.png';
+				image.url = '../Content/img/red_pin.png';
 			
 			var marker = new google.maps.Marker({
 				position: myLatlng,
@@ -264,12 +208,145 @@
 }
 
 <div id="header">
+	
 	<div class="logo">
-		<span class="headerMessage">Reservations By The Minute</span>
+		<div id="headerMessageBox">
+			<span class="headerMessage">Reservations By The Minute</span>
+		</div>
+		<div id="partyBox">
+			<div class="inner">
+				<span id="partySize">Party Size:</span>
+			</div>
+			<div id="green" class="inner">
+				<span class="innerLabel">1-4</span>
+			</div>
+			<div id="orange" class="inner">
+				<span class="innerLabel">5-8</span>
+			</div>
+			<div id="red" class="inner">
+				<span class="innerLabel">9+</span>
+			</div>
+		</div>
+		
+	</div>
+	<div>
 		<span class="delayMessage">*delayed by 2-5 minutes</span>
 	</div>
-	<div id="list"></div>
 </div>
 <div id="map-canvas" />
 
 
+@section styles{
+	<style type="text/css">
+
+	 span {
+		font-family: monospace;
+	}
+
+		.innerLabel {
+			padding-top: 38px;
+			display: block;
+			text-align: center;
+			font-weight: bold;
+			padding-right: 3px;
+		}
+		#partySize {
+			padding-top: 15px;
+			display: block;
+			font-weight: bold;
+			padding-right: 24px;
+		}
+
+		#green {
+			width: 44px;height: 50px;
+			background-image: url(../../Content/img/green_ball.png);
+			background-position: top center;
+			opacity: 1;
+			background-repeat: no-repeat;
+
+		}
+		#red {
+			width: 44px;height: 50px;
+			background-image: url(../../Content/img/red_ball.png);
+			background-position: top center;
+			opacity: 1;
+			background-repeat: no-repeat;
+		}
+
+		#orange {
+			width: 44px;height: 50px;
+			background-image: url(../../Content/img/orange_ball.png);
+			background-position: top center;
+			opacity: 1;
+			background-repeat: no-repeat;
+		}
+		.inner {
+			float: left;
+			height: 100%;
+		}
+
+		#partyBox {
+			float: right;
+			padding-right: 35px;
+			padding-top: 20px;
+		}
+
+
+		#headerMessageBox {
+			width: 750px;
+			height: 100%;
+			float: left;
+		}
+
+		html {
+			height: 100%
+		}
+
+		body {
+			height: 100%;margin: 0;padding: 0
+		}
+
+		#map-canvas {
+			height: 100%;
+			position: relative;
+		}
+
+		#header {
+			height: 100px;
+			min-height: 75px;
+			position: absolute;
+			z-index: 1;
+			background-color: white;
+			width: 100%;
+			opacity: .8;
+			border-bottom: solid 1px red;
+		}
+
+		.headerMessage {
+			display: block;
+			text-align: left;
+			font-size: 2em;
+			padding-top: 30px;
+			padding-left: 249px;
+			font-weight: bold;
+			float: left;
+		}
+
+		.logo {
+			height: 85px;
+			width: 100%;
+			background-image: url(../Content/img/Logo.png);
+			background-position: left;
+			background-repeat: no-repeat;
+			opacity: 1;
+		}
+
+		.delayMessage {
+			display: block;
+			width: 100%;
+			opacity: 1;
+			text-align: right;
+			font-size: .7em;
+		}
+	</style>
+}
