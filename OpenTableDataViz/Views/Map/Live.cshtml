@@ -170,21 +170,22 @@
 		function placeMarker(reso) {
 			var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
 			var image = {
-				url: '../Content/img/green_pin.png',
-				size: new google.maps.Size(45, 67),
+				url: '../Content/img/red_restaurant.png',
+				size: new google.maps.Size(32, 37),
 				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(22, 67)
+				anchor: new google.maps.Point(16, 37)
 			};
 
-			if (reso.Partysize > 4 && reso.Partysize < 8)
-				image.url = '../Content/img/orange_pin.png';
+			if (reso.Partysize > 3 && reso.Partysize < 7)
+				image.url = '../Content/img/yellow_restaurant.png';
 			else if (reso.Partysize > 8)
-				image.url = '../Content/img/red_pin.png';
+				image.url = '../Content/img/blue_restaurant.png';
 			
 			var marker = new google.maps.Marker({
 				position: myLatlng,
 				map: map,
 				icon: image,
+				animation: google.maps.Animation.DROP,
 				title: reso.RestaurantName + " - " + reso.Partysize
 			});
 
@@ -217,20 +218,20 @@
 			<div class="inner">
 				<span id="partySize">Party Size:</span>
 			</div>
-			<div id="green" class="inner">
-				<span class="innerLabel">1-4</span>
-			</div>
-			<div id="orange" class="inner">
-				<span class="innerLabel">5-8</span>
-			</div>
 			<div id="red" class="inner">
-				<span class="innerLabel">9+</span>
+				<span class="innerLabel">1-3</span>
+			</div>
+			<div id="yellow" class="inner">
+				<span class="innerLabel">4-6</span>
+			</div>
+			<div id="blue" class="inner">
+				<span class="innerLabel">7+</span>
 			</div>
 		</div>
 		
 	</div>
 	<div>
-		<span class="delayMessage">*delayed by 2-5 minutes</span>
+		<span class="delayMessage">*delayed up to 5 minutes</span>
 	</div>
 </div>
 <div id="map-canvas" />
@@ -240,26 +241,24 @@
 	<style type="text/css">
 
 	 span {
-		font-family: monospace;
+		font-family: Arial, Helvetica, sans-serif;
 	}
 
 		.innerLabel {
 			padding-top: 38px;
 			display: block;
 			text-align: center;
-			font-weight: bold;
 			padding-right: 3px;
 		}
 		#partySize {
 			padding-top: 15px;
 			display: block;
-			font-weight: bold;
 			padding-right: 24px;
 		}
 
-		#green {
+		#blue {
 			width: 44px;height: 50px;
-			background-image: url(../../Content/img/green_ball.png);
+			background-image: url(../../Content/img/blue_restaurant.png);
 			background-position: top center;
 			opacity: 1;
 			background-repeat: no-repeat;
@@ -267,15 +266,15 @@
 		}
 		#red {
 			width: 44px;height: 50px;
-			background-image: url(../../Content/img/red_ball.png);
+			background-image: url(../../Content/img/red_restaurant.png);
 			background-position: top center;
 			opacity: 1;
 			background-repeat: no-repeat;
 		}
 
-		#orange {
+		#yellow {
 			width: 44px;height: 50px;
-			background-image: url(../../Content/img/orange_ball.png);
+			background-image: url(../../Content/img/yellow_restaurant.png);
 			background-position: top center;
 			opacity: 1;
 			background-repeat: no-repeat;
@@ -328,14 +327,13 @@
 			font-size: 2em;
 			padding-top: 30px;
 			padding-left: 249px;
-			font-weight: bold;
 			float: left;
 		}
 
 		.logo {
 			height: 85px;
 			width: 100%;
-			background-image: url(../Content/img/Logo.png);
+			background-image: url(../../Content/img/Logo.png);
 			background-position: left;
 			background-repeat: no-repeat;
 			opacity: 1;

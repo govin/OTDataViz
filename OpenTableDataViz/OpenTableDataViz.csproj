@@ -223,13 +223,17 @@
     <Content Include="BubbleChartJP.html" />
     <Content Include="BubbleChartNA.html" />
     <Content Include="Content\bubble.css" />
+    <Content Include="Content\img\blue_restaurant.png" />
     <Content Include="Content\img\green_ball.png" />
     <Content Include="Content\img\green_pin.png" />
+    <Content Include="Content\img\green_restaurant.png" />
     <Content Include="Content\img\orange_ball.png" />
     <Content Include="Content\img\orange_pin.png" />
     <Content Include="Content\img\red_ball.png" />
     <Content Include="Content\img\red_pin.png" />
     <Content Include="Content\img\Logo.png" />
+    <Content Include="Content\img\red_restaurant.png" />
+    <Content Include="Content\img\yellow_restaurant.png" />
     <Content Include="Content\kendo.common.min.css" />
     <Content Include="Content\kendo.dataviz.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />

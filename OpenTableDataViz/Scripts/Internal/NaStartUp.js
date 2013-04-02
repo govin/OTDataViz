@@ -39,7 +39,7 @@ $(document).ready(function () {
 		bubbleChartUrl: "api/BubbleChart?region=na",
 		radialChartUrl: "api/RadialChart?region=na",
 		neighborhoodLabel: "Neighborhood",
-		backLabel: "<<<     Back",
+		backLabel: "<<< Back",
 		metroLabel: "Metro"
 	};
 	
