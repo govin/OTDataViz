@@ -6,22 +6,24 @@ using System.Threading.Tasks;
 
 namespace OpenTableDataViz.Services
 {
-	using OpenTableDataViz.Models;
+    using OpenTableDataViz.Models;
 
-	public interface IBusinessQuery
-	{
-		List<ReservationHistoryModel> GetHistory(string isoStartDate, string isoEndDate);
+    public interface IBusinessQuery
+    {
+        List<ReservationHistoryModel> GetHistory(string isoStartDate, string isoEndDate);
 
-		Dictionary<long, RestaurantModel> GetAllRestaurants();
+        Dictionary<long, RestaurantModel> GetAllRestaurants();
 
-		List<Reservation> GetReservationsForLastXMinutes(int timeToGoBackInPastMinutes, string url);
+        List<Reservation> GetReservationsForLastXMinutes(int timeToGoBackInPastMinutes, string url);
 
-		List<ResoFeedModel> GetResoFeedsForLastXMinutes(int xminutes, string url);
+        List<ResoFeedModel> GetResoFeedsForLastXMinutes(int xminutes, string url);
 
-		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url);
+        List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url);
 
-		List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url, string metroArea);
+        List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url, string metroArea);
 
-		List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes, string url);
-	}
+        List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes, string url);
+
+        List<CuisineRadialModel> GetCuisineRadialChartData(int timeToGoBackInPastMinutes, string url, string metroArea);
+    }
 }
