@@ -114,6 +114,13 @@
 	margin: 2px 0 2px 0;
 	padding: 4px 0 4px 6px;
 	border-radius: 4px;
+    cursor: pointer;
+}
+
+.backButton {
+    cursor: pointer;
+    text-decoration: underline;
+    color: blue;
 }
 
 #bodyLabelBox {
