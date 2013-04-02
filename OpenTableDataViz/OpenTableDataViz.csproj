@@ -179,6 +179,7 @@
     <Compile Include="Api\LiveResoFeedJPController.cs" />
     <Compile Include="Api\LiveResoFeedEUController.cs" />
     <Compile Include="Api\LiveResoFeedNAController.cs" />
+    <Compile Include="Api\PartnerChartController.cs" />
     <Compile Include="Api\RadialChartController.cs" />
     <Compile Include="Api\ReservationHistoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Installers\WebApiInstaller.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CuisineRadialModel.cs" />
+    <Compile Include="Models\PartnerBubbleChartModel.cs" />
     <Compile Include="Models\ReservationHistoryModel.cs" />
     <Compile Include="Models\ResoCountBubbleChartModel.cs" />
     <Compile Include="Models\ResoFeedModel.cs" />
@@ -219,9 +221,9 @@
     <Compile Include="Services\BusinessQueryService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BubbleChartEU.html" />
-    <Content Include="BubbleChartJP.html" />
-    <Content Include="BubbleChartNA.html" />
+    <Content Include="ResoChartEU.html" />
+    <Content Include="ResoChartAsia.html" />
+    <Content Include="ResoChartNA.html" />
     <Content Include="Content\bubble.css" />
     <Content Include="Content\img\blue_restaurant.png" />
     <Content Include="Content\img\green_ball.png" />
@@ -294,13 +296,19 @@
     <Content Include="Global.asax" />
     <Content Include="LiveReservationMap.html" />
     <Content Include="MotionChart.html" />
+    <Content Include="PartnerChartAsia.html" />
+    <Content Include="PartnerChartEU.html" />
+    <Content Include="PartnerChartNA.html" />
     <Content Include="ReservationMap.html" />
     <Content Include="Scripts\d3.js" />
     <Content Include="Scripts\d3.min.js" />
-    <Content Include="Scripts\Internal\EuStartUp.js" />
-    <Content Include="Scripts\Internal\BubbleViewModel.js" />
-    <Content Include="Scripts\Internal\DSProxy.js" />
-    <Content Include="Scripts\Internal\JpStartUp.js" />
+    <Content Include="Scripts\Internal\ResoChartEuStartUp.js" />
+    <Content Include="Scripts\Internal\ResoChartViewModel.js" />
+    <Content Include="Scripts\Internal\ResoChartAsiaStartUp.js" />
+    <Content Include="Scripts\Internal\PartnerChartAsiaStartup.js" />
+    <Content Include="Scripts\Internal\PartnerChartEuStartup.js" />
+    <Content Include="Scripts\Internal\PartnerChartNaStartup.js" />
+    <Content Include="Scripts\Internal\PartnerChartViewModel.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
@@ -308,7 +316,7 @@
     <Content Include="Scripts\jquery.mockjson.js" />
     <Content Include="Scripts\kendo.all.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\Internal\NaStartUp.js" />
+    <Content Include="Scripts\Internal\ResoChartNaStartUp.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
