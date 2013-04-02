@@ -25,7 +25,7 @@
 }
 
 			.bubbleBox {
-				height: 658px;
+				height: 680px;
 				width: 914px;
 				margin-bottom: 10px;
 				border: solid 1px gray;
@@ -42,7 +42,7 @@
 
 			#list {
 				width: 300px;
-				height: 604px;
+				height: 650px;
 				margin-left: 10px;
 				padding: 2px 2px 2px 2px;
 				overflow: hidden;
@@ -54,7 +54,7 @@
 
 			.radialBox {
 				width: 200px;
-				height: 658px;
+				height: 680px;
 				border: solid 1px gray;
 				border-radius: 10px;
 				-webkit-box-shadow: 5px 8px 8px #D9D9D9;
