@@ -38,18 +38,5 @@ namespace OpenTableDataViz.Api
 					return this.GetResponse(this.query.GetPartnerBubbleChartData(60, config.ResoFeedUrlNA));
 			}
 		}
-
-		//public HttpResponseMessage Get(string region, string metro)
-		//{
-		//	switch (region.ToLower().Trim())
-		//	{
-		//		case "eu":
-		//			return this.GetResponse(this.query.GetResoCountBubbleChartData(60, this.config.ResoFeedUrlEU, metro));
-		//		case "asia":
-		//			return this.GetResponse(this.query.GetResoCountBubbleChartData(60, this.config.ResoFeedUrlAsia, metro));
-		//		default:
-		//			return this.GetResponse(this.query.GetResoCountBubbleChartData(60, config.ResoFeedUrlNA, metro));
-		//	}
-		//}
 	}
 }

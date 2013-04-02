@@ -114,7 +114,13 @@
 	margin: 2px 0 2px 0;
 	padding: 4px 0 4px 6px;
 	border-radius: 4px;
-    cursor: pointer;
+	cursor: pointer;
+}
+
+.partnerName {
+	margin: 2px 0 2px 0;
+	padding: 4px 0 4px 6px;
+	border-radius: 4px;
 }
 
 .backButton {

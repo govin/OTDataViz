@@ -1,12 +1,9 @@
 ﻿var PartnerViewModel = function (options) {
 	var self = this;
-	this.displayBackButton = false;
 	this.neighborhoodLabel = options.neighborhoodLabel;
 	this.metroLabel = options.metroLabel;
 	this.backLabel = options.backLabel;
 	this.bubbleChartUrl = options.bubbleChartUrl;
-	this.radialChartUrl = options.radialChartUrl;
-	var metro;
 	
 	this.loadCharts = function (restaurants) {
 		var locationData = [];
@@ -56,7 +53,10 @@
 
 				if (index === -1) {
 					colorCol.push(assignedColor);
-					locationData.push({ location: d.packageName, color: assignedColor, count: d.total, id: d.id });
+					locationData.push({ location: d.packageName, color: assignedColor, count: d.value });
+				}
+				else {
+					locationData[index].count = locationData[index].count + d.value;
 				}
 				return assignedColor;
 			});
@@ -73,29 +73,12 @@
 		$("#list").empty();
 
 		locationData.sort(self.sortByCount);
-
-		//if (self.displayBackButton) {
-		//	var backBtn = $('<div/>', { "class": "backButton" })
-		//		.text(self.backLabel)
-		//		.click(function () {
-		//			metro = null;
-		//			self.displayBackButton = false;
-		//			self.getBubbleData();
-		//		});
-		//	$("#list").append(backBtn);
-		//	$("#area").text(self.neighborhoodLabel);
-		//	$("#list").off("click", ".location");
-		//}
-		//else {
-		//	$("#list").on("click", ".location", viewModel.fetchData);
-		//	$("#area").text(self.metroLabel);
-		//}
-
-		//$.each(locationData, function (index, loc) {
-		//	var ele = $('<div/>', { "style": "background-color:" + loc.color + ";", "class": "location", "id": "item" + index }).text(loc.location + " - " + loc.count);
-		//	$(ele).data("id", loc.location);
-		//	$("#list").append(ele);
-		//});
+		
+		$.each(locationData, function (index, loc) {
+			var ele = $('<div/>', { "style": "background-color:" + loc.color + ";", "class": "partnerName" }).text(loc.location + " - " + loc.count);
+			$(ele).data("id", loc.location);
+			$("#list").append(ele);
+		});
 	};
 
 	this.sortByCount = function (a, b) {
@@ -105,60 +88,17 @@
 	this.getBubbleData = function () {
 		var url = self.bubbleChartUrl;
 		var rows = [];
-		if (typeof metro !== "undefined" && metro !== null) {
-			url += "&metro=" + metro;
-		}
-
+		
 		$.getJSON(url, function (partners) {
 			for (var index = 0, length = partners.length; index < length; index++) {
 				var partner = partners[index];
 				rows.push({
 					packageName: partner.PartnerName,
 					className: partner.PartnerName,
-					value: partner.ReservationCount,
-					total: 10
-					//cuisineType: rest.CuisineType
+					value: partner.ReservationCount
 				});
 			}
 			self.loadCharts(rows);
-		});
-	};
-
-	this.fetchData = function (event) {
-		var id = $(event.target).data("id");
-		metro = id;
-		self.getBubbleData();
-		self.loadRadials();
-		self.displayBackButton = true;
-	};
-
-	this.initRadials = function (selector, minorUnit, majorUnit, max) {
-		$(selector).kendoRadialGauge({
-			scale: {
-				minorUnit: minorUnit,
-				majorUnit: majorUnit,
-				startAngle: -30,
-				endAngle: 210,
-				max: max,
-				labels: {
-					position: "outside"
-				},
-				ranges: [
-					{
-						from: 0,
-						to: max / 3,
-						color: "#31A354"
-					}, {
-						from: max / 3,
-						to: (2 * max) / 3,
-						color: "#ff7a00"
-					}, {
-						from: (2 * max) / 3,
-						to: max,
-						color: "#c20000"
-					}
-				]
-			}
 		});
 	};
 };
