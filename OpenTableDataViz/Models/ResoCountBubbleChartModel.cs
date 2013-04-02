@@ -5,14 +5,16 @@ using System.Web;
 
 namespace OpenTableDataViz.Models
 {
-	public class ResoCountBubbleChartModel
-	{
-		public string RName { get; set; }
+    public class ResoCountBubbleChartModel
+    {
+        public string RName { get; set; }
 
-		public long ReservationCount { get; set; }
+        public long ReservationCount { get; set; }
 
-		public string Location { get; set; }
+        public string Location { get; set; }
 
-		//public string LocationId { get; set; }
-	}
+        public string CuisineType { get; set; }
+
+        public long LocationCount { get; set; }
+    }
 }
