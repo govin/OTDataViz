@@ -113,6 +113,7 @@
 					metro = null;
 					self.displayBackButton = false;
 					self.getBubbleData();
+					self.loadRadials();
 				});
 			$("#list").append(backBtn);
 			$("#area").text(self.neighborhoodLabel);

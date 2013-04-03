@@ -9,7 +9,5 @@ $(document).ready(function () {
 	};
 	viewModel = new PartnerViewModel(options);
 	viewModel.getBubbleData();
-	viewModel.loadRadials();
-	//setInterval(function () { viewModel.getBubbleData(); }, 60000);
-	//setInterval(function () { viewModel.loadRadials(); }, 60000);
+	setInterval(function () { viewModel.getBubbleData(); }, 60000);
 });

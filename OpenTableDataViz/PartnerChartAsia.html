@@ -1,36 +1,32 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=9" /> 
 		<link href="Content/kendo.common.min.css" rel="stylesheet" />
 		<link href="Content/kendo.dataviz.css" rel="stylesheet" />
 		<title>OpenTable Daily Stats</title>
 		<link href="Content/bubble.css" rel="stylesheet" />
+		<link href="Content/partnerchart.css" rel="stylesheet" />
 	</head>
-	<body>
-		<div class="header">
-			<span> Japan Reservation Sources</span>
-		</div>
-		<div class="bubbleBox">
-			<div class="clear bubbleLabelBox">
-				<div id="bodyLabelBox">
-					<span></span>
-				</div>
-				<div id="areaLabelBox">
-					<span id="area"></span>
-				</div>
-			</div>
-			<div id="chart" class="innerBubble"></div>
-			<div id="list" class="innerBubble"></div>
-			<div class="clear"></div>
-		</div>
-		<div id="data">
-			<span id="dataLabel">* Counts are the number of reservations in the past hour.</span>
-		</div>
-		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
-		<script type="text/javascript" src="Scripts/d3.min.js"></script>
-		<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
-		<script type="text/javascript" src="Scripts/Internal/PartnerChartViewModel.js"></script>
-		<script type="text/javascript" src="Scripts/Internal/PartnerChartAsiaStartup.js"></script>
-	</body>
+<body>
+	<div class="header">
+		<span>Japan Reservation Sources</span>
+	</div>
+	<div class="bubbleBox">
+		<div id="chart" class="innerBubble"></div>
+		<div id="list" class="innerBubble"></div>
+		<div class="clear"></div>
+	</div>
+	<div id="data">
+		<span class="dataLabel">* Counts are the number of reservations in the past hour.</span>
+		<br />
+		<span class="dataLabel">* Chart auto updates every minute</span>
+	</div>
+	<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+	<script type="text/javascript" src="Scripts/d3.min.js"></script>
+	<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
+	<script type="text/javascript" src="Scripts/Internal/PartnerChartViewModel.js"></script>
+	<script type="text/javascript" src="Scripts/Internal/PartnerChartAsiaStartup.js"></script>
+</body>
 </html>

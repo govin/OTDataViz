@@ -8,9 +8,15 @@ namespace OpenTableDataViz.Services
     {
         public void SetCacheItem(string key, object item)
         {
-            HttpRuntime.Cache.Insert(key, item, null, DateTime.Now.AddMinutes(120),
-                System.Web.Caching.Cache.NoSlidingExpiration);
+            HttpRuntime.Cache.Insert(key, item);
         }
+
+		public void SetCacheItem(string key, object item, int timeoutMinutes)
+		{
+			HttpRuntime.Cache.Insert(key, item, null, DateTime.Now.AddMinutes(timeoutMinutes),
+				System.Web.Caching.Cache.NoSlidingExpiration);
+		}
+
 
         public object GetCacheItem(string key)
         {

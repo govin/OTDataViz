@@ -1,53 +1,56 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=9" /> 
 		<link href="Content/kendo.common.min.css" rel="stylesheet" />
 		<link href="Content/kendo.dataviz.css" rel="stylesheet" />
 		<title>OpenTable Daily Stats</title>
 		<link href="Content/bubble.css" rel="stylesheet" />
 	</head>
-	<body>
-		<div class="header">
-			<span>Current Top European Restaurants</span>
-		</div>
-		<div class="bubbleBox">
-			<div class="clear bubbleLabelBox">
-				<div id="bodyLabelBox">
-					<span id="restaurantMetro">Restaurants</span>
-				</div>
-				<div id="areaLabelBox">
-					<span id="area">Metro</span>
-				</div>
+<body>
+	<div class="header">
+		<span>Top European Restaurants Now</span>
+	</div>
+	<div class="bubbleBox">
+		<div class="clear bubbleLabelBox">
+			<div id="bodyLabelBox">
+				<span id="restaurantMetro">Restaurants</span>
 			</div>
-			<div id="chart" class="innerBubble"></div>
-			<div id="list" class="innerBubble"></div>
-			<div class="clear"></div>
-		</div>
-		<div class="radialBox">
-			<div class="radialHeaderLabelBox"><span>Top Cuisines</span></div>
-			<div>
-				<div class="radialLabelBox">
-					<span id="firstRadialText" class="radialLabel"></span>
-				</div>
-				<div id="firstRadial" class="radial"></div>
-				<div class="radialLabelBox">
-					<span id="secondRadialText" class="radialLabel"></span>
-				</div>
-				<div id="secondRadial" class="radial"></div>
-				<div class="radialLabelBox">
-					<span id="thirdRadialText" class="radialLabel"></span>
-				</div>
-				<div id="thirdRadial" class="radial"></div>
+			<div id="areaLabelBox">
+				<span id="area">Metro</span>
 			</div>
 		</div>
-		<div id="data">
-			<span id="dataLabel">* Counts are the number of reservations in the past hour.</span>
+		<div id="chart" class="innerBubble"></div>
+		<div id="list" class="innerBubble"></div>
+		<div class="clear"></div>
+	</div>
+	<div class="radialBox">
+		<div class="radialHeaderLabelBox"><span>Top Cuisines</span></div>
+		<div>
+			<div class="radialLabelBox">
+				<span id="firstRadialText" class="radialLabel"></span>
+			</div>
+			<div id="firstRadial" class="radial"></div>
+			<div class="radialLabelBox">
+				<span id="secondRadialText" class="radialLabel"></span>
+			</div>
+			<div id="secondRadial" class="radial"></div>
+			<div class="radialLabelBox">
+				<span id="thirdRadialText" class="radialLabel"></span>
+			</div>
+			<div id="thirdRadial" class="radial"></div>
 		</div>
-		<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
-		<script type="text/javascript" src="Scripts/d3.min.js"></script>
-		<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
-		<script type="text/javascript" src="Scripts/Internal/ResoChartViewModel.js"></script>
-		<script type="text/javascript" src="Scripts/Internal/ResoChartEuStartUp.js"></script>
-	</body>
+	</div>
+	<div id="data">
+		<span class="dataLabel">* Counts are the number of reservations in the past hour.</span>
+		<br/>
+		<span class="dataLabel">* Chart auto updates every minute</span>
+	</div>
+	<script type="text/javascript" src="Scripts/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="Scripts/jquery.mockjson.js"></script>
+	<script type="text/javascript" src="Scripts/d3.min.js"></script>
+	<script type="text/javascript" src="Scripts/kendo.all.min.js"></script>
+	<script type="text/javascript" src="Scripts/Internal/ResoChartViewModel.js"></script>
+	<script type="text/javascript" src="Scripts/Internal/ResoChartEuStartUp.js"></script>
+</body>
 </html>

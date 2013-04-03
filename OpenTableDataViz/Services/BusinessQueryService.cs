@@ -386,7 +386,7 @@ namespace OpenTableDataViz.Services
 				else
 				{
 					newFeed = entityOp.GetEntity<ResoFeedModel>(feed.Href_prev);
-					cacheService.SetCacheItem(feed.Href_prev, newFeed);
+					cacheService.SetCacheItem(feed.Href_prev, newFeed, 120);
 				}
 				this.GetResoFeedsForLastXMinutes(dateTimeToGoBack, newFeed, feed.Max_Resid, ref resoFeedList);
 			}

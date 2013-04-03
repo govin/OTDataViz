@@ -6,13 +6,15 @@
 
 @section scripts{
 	<script type="text/javascript"
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZCTMWJsQWIIrJreyd2ly2AzsOusVtfs&sensor=false">
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbZCTMWJsQWIIrJreyd2ly2AzsOusVtfs&sensor=false">
 	</script>
+	
+	<script type="text/javascript" src="~/Scripts/richmarker.js"></script>
 
 	<script type="text/javascript">
 		var map;
-		var lat = 38.7;
-		var lon = -9.18;
+		var lat = 39.123;
+		var lon = -94.58;
 		var zoom = 3;
 
 		function loadNAReservations() {
@@ -215,30 +217,114 @@
 			setTimeout(function () { placeMarker(reso); }, time);
 		}
 
+		//function placeMarker(reso) {
+		//	var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
+		//	var image = {
+		//		url: '../Content/img/red_restaurant.png',
+		//		size: new google.maps.Size(32, 37),
+		//		origin: new google.maps.Point(0, 0),
+		//		anchor: new google.maps.Point(16, 37)
+		//	};
+
+		//	if (reso.Partysize > 3 && reso.Partysize < 7)
+		//		image.url = '../Content/img/yellow_restaurant.png';
+		//	else if (reso.Partysize > 6)
+		//		image.url = '../Content/img/blue_restaurant.png';
+
+		//	var marker = new google.maps.Marker({
+		//		position: myLatlng,
+		//		map: map,
+		//		icon: image,
+		//		animation: google.maps.Animation.DROP,
+		//		title: reso.RestaurantName + " - " + reso.Partysize
+		//	});
+
+		//	window.setTimeout(function () { marker.setMap(null); }, 3000);
+		//}
+		
 		function placeMarker(reso) {
 			var myLatlng = new google.maps.LatLng(reso.Latitude, reso.Longitude);
 			var image = {
-				url: '../Content/img/red_restaurant.png',
-				size: new google.maps.Size(32, 37),
-				origin: new google.maps.Point(0, 0),
-				anchor: new google.maps.Point(16, 37)
+			       url: '../Content/img/red_restaurant.png',
+			       size: new google.maps.Size(32, 37),
+			       origin: new google.maps.Point(0, 0),
+			       anchor: new google.maps.Point(16, 21)
 			};
 
+			//if (reso.Partysize > 3 && reso.Partysize < 7)
+			//       image.url = '../Content/img/yellow_restaurant.png';
+			//else if (reso.Partysize > 6)
+			//       image.url = '../Content/img/blue_restaurant.png';
+			var imgUrl = '../Content/img/red_restaurant.png';
 			if (reso.Partysize > 3 && reso.Partysize < 7)
-				image.url = '../Content/img/yellow_restaurant.png';
-			else if (reso.Partysize > 8)
-				image.url = '../Content/img/blue_restaurant.png';
+				imgUrl = '../Content/img/yellow_restaurant.png';
+			else if (reso.Partysize > 6)
+				imgUrl = '../Content/img/blue_restaurant.png';
 
+			image.url = imgUrl;
+
+			// content element of a rich marker
+			var richMarkerContent = document.createElement('div');
+			var resoMarkerDiv = document.createElement('div');
+			resoMarkerDiv.id = reso.Resid;
+			resoMarkerDiv.title = reso.RestaurantName + " - " + reso.Partysize;
+			// image
+			var resoImage = new Image();
+			resoImage.src = imgUrl;
+			// append image into the rotation container element
+			resoMarkerDiv.appendChild(resoImage);
+			// append rotation container into the richMarker content element
+			richMarkerContent.appendChild(resoMarkerDiv);
+			
 			var marker = new google.maps.Marker({
 				position: myLatlng,
 				map: map,
 				icon: image,
 				animation: google.maps.Animation.DROP,
-				title: reso.RestaurantName + " - " + reso.Partysize
+				title: reso.RestaurantName + " - " + reso.Partysize,
+				optimized: false
 			});
 
-			window.setTimeout(function () { marker.setMap(null); }, 3000);
+			var richMarker;
+			window.setTimeout(function () {
+				richMarker = new RichMarker({
+					position: myLatlng,
+					map: map,
+					draggable: false,
+					flat: true,
+					anchor: RichMarkerPosition.MIDDLE,
+					content: richMarkerContent.innerHTML,
+					title: reso.RestaurantName
+				});
+			}, 1500);
+
+			
+			//var txt = "div.gmnoprint[title='" + marker.title + "'] img";
+
+			var id = reso.Resid;
+			window.setTimeout(function () {
+				marker.setMap(null);
+				$("#" + id).fadeOut(400, function () {
+					richMarker.setMap(null);
+				});
+			}, 3000);
+
+			//window.setTimeout(function () {
+			//       //alert('fade out');
+			//       var selector = $(txt);
+			//       //selector.css("opacity", 0);
+			//       //selector.hide();
+			//       selector.fadeOut("slow", function () {
+			//               marker.setMap(null);
+			//       });
+			//       //selector.fadeOut(500, function () {
+			//       //       alert("faded out");
+			//       //});
+			//       //marker.setMap(null);
+			//}, 3000);
 		}
+
+
 
 		$(document).ready(function () {
 			initializeMap();
@@ -277,13 +363,13 @@
 			</div>
 		</div>
 		<div id="resosPerMin">
-			<span class="resosPerMin">North America: <span id="resosPerMinuteNa">0</span> reservations/minute</span>
-			<span class="resosPerMin">Europe: <span id="resosPerMinuteEu">0</span> reservations/minute</span>
-			<span class="resosPerMin">Japan: <span id="resosPerMinuteAsia">0</span> reservations/minute</span>
+			<span class="resosPerMin">North America: <span id="resosPerMinuteNa">0</span> reservations/minute (approx)</span>
+			<span class="resosPerMin">Europe: <span id="resosPerMinuteEu">0</span> reservations/minute (approx)</span>
+			<span class="resosPerMin">Japan: <span id="resosPerMinuteAsia">0</span> reservations/minute (approx)</span>
 		</div>
 	</div>
 	<div>
-		<span class="delayMessage">*delayed up to 5 minutes</span>
+		<span class="delayMessage">*Delayed up to 5 minutes.</span>
 	</div>
 </div>
 <div id="map-canvas" />

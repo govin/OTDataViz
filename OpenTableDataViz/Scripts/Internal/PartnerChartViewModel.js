@@ -40,7 +40,7 @@
 				return d.className + ": " + format(d.value);
 			});
 
-		var colorCol = [];
+		var partnerNames = [];
 
 		node.append("circle")
 			.attr("r", function (d) {
@@ -48,11 +48,11 @@
 			})
 			.style("fill", function (d) {
 				var assignedColor = color(d.packageName);
-
-				var index = $.inArray(assignedColor, colorCol);
+				
+				var index = $.inArray(d.packageName, partnerNames);
 
 				if (index === -1) {
-					colorCol.push(assignedColor);
+					partnerNames.push(d.packageName);
 					locationData.push({ location: d.packageName, color: assignedColor, count: d.value });
 				}
 				else {

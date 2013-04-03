@@ -147,6 +147,6 @@ span {
 	clear: both;
 }
 
-#dataLabel {
-	font-size: .5em;
+.dataLabel {
+	font-size: 1em;
 }

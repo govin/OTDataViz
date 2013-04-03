@@ -10,6 +10,8 @@ namespace OpenTableDataViz.Services
 	{
 		void SetCacheItem(string key, object item);
 
+		void SetCacheItem(string key, object item, int timeoutMinutes);
+
 		object GetCacheItem(string key);
 	}
 }
