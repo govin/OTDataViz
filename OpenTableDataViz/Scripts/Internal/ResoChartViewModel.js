@@ -45,18 +45,21 @@
 		$("#chart").empty();
 		var data = { children: restaurants };
 
-		var diameter = 600,
+		var bubbleBoxWidth = (3 / 4) * $(".bubbleBox").width();
+		var bubbleBoxHeight = $(".bubbleBox").height();
+		
+		var diameter = bubbleBoxWidth,
 			format = d3.format(",d"),
 			color = d3.scale.category20c();
 
 		var bubble = d3.layout.pack()
 			.sort(null)
-			.size([diameter, diameter])
+			.size([bubbleBoxWidth, bubbleBoxHeight])
 			.padding(1.5);
 
 		var svg = d3.select("#chart").append("svg")
-			.attr("width", diameter)
-			.attr("height", diameter)
+			.attr("width", bubbleBoxWidth)
+			.attr("height", bubbleBoxHeight)
 			.attr("class", "bubble");
 
 		var node = svg.selectAll(".node")
