@@ -267,6 +267,9 @@ namespace OpenTableDataViz.Services
 				}
 			}
 
+			// remove demoland restaurants
+			resoList = resoList.Where(x => x.MetroArea != "Demoland").ToList();
+
 			foreach (var reservation in resoList)
 			{
 				reservation.MetroAreaResoCount = countByMetro[reservation.MetroArea];
