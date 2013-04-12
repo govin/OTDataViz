@@ -97,7 +97,7 @@
 			});
 
 		node.append("text")
-			.attr("dy", ".3em")
+			.attr("dy", "0.3em")
 			.style("text-anchor", "middle")
 			.text(function (d) {
 				return d.className.substring(0, d.r / 3);

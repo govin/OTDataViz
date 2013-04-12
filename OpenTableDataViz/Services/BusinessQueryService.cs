@@ -308,7 +308,7 @@ namespace OpenTableDataViz.Services
 				);
 			}
 
-			return bubbleChartData.OrderByDescending(x => x.ReservationCount).Take(100).ToList();
+			return bubbleChartData.OrderByDescending(x => x.ReservationCount).Take(50).ToList();
 		}
 
 		public List<ResoCountBubbleChartModel> GetResoCountBubbleChartData(int timeToGoBackInPastMinutes, string url, string metroArea)
@@ -341,7 +341,7 @@ namespace OpenTableDataViz.Services
 				);
 			}
 
-			return bubbleChartData.OrderByDescending(x => x.ReservationCount).Take(100).ToList();
+			return bubbleChartData.OrderByDescending(x => x.ReservationCount).Take(50).ToList();
 		}
 
 		public List<PartnerBubbleChartModel> GetPartnerBubbleChartData(int timeToGoBackInPastMinutes, string url)
