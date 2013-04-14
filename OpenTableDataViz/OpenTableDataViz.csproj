@@ -181,6 +181,7 @@
     <Compile Include="Api\LiveResoFeedNAController.cs" />
     <Compile Include="Api\PartnerChartController.cs" />
     <Compile Include="Api\RadialChartController.cs" />
+    <Compile Include="Api\ReservationController.cs" />
     <Compile Include="Api\ReservationHistoryController.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

@@ -35,6 +35,7 @@ namespace OpenTableDataViz.Services
 					var task = client.GetAsync(url).ContinueWith(
 						request =>
 						{
+							
 							var response = request.Result;
 
 							if (response.IsSuccessStatusCode)
