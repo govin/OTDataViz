@@ -13,8 +13,8 @@
 
 	<script type="text/javascript">
 		var map;
-		var lat = 39.123;
-		var lon = -94.58;
+		var lat = 46.44;
+		var lon = -96.8;
 		var zoom = 3;
 
 		function loadNAReservations() {
@@ -135,6 +135,66 @@
 			};
 			map = new google.maps.Map(document.getElementById("map-canvas"),
 				mapOptions);
+
+		    var styles = [
+		        {
+		            "featureType": "administrative.country",
+		            "elementType": "labels.text",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "landscape",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "poi",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "road",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "transit",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "water",
+		            "elementType": "labels.text",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "water",
+		            "stylers": [
+		                { "color": "#98bba2" }
+		            ]
+		        }, {
+		            
+		        }, {
+		            "featureType": "administrative.province",
+		            "elementType": "labels.text",
+		            "stylers": [
+		                { "visibility": "off" }
+		            ]
+		        }, {
+		            "featureType": "administrative.province",
+		            "elementType": "geometry",
+		            "stylers": [
+		                { "visibility": "on" },
+		                { "weight": 0.6 }
+		            ]
+		        }, {
+		            
+		        }
+		    ];
+
+		    map.setOptions({ styles: styles });
 		}
 
 		function setMapCoordinates() {
@@ -150,7 +210,7 @@
 				case "na":
 					lat = 48.17;
 					lon = -100.17;
-					zoom = 4;
+					zoom = 3;
 					retVal = true;
 					break;
 				case "eu":
@@ -175,7 +235,7 @@
 			var userLang = (navigator.language) ? navigator.language : navigator.userLanguage;
 			var width = $("body").width();
 
-			if (width < 1825) {
+			if (width < 1500) {
 				switch (userLang.toLowerCase()) {
 					case "en-gb":
 					case "de-de":
@@ -191,7 +251,7 @@
 					default:
 						lat = 48.17;
 						lon = -100.17;
-						zoom = 4;
+						zoom = 3;
 						break;
 				}
 			}
@@ -343,34 +403,30 @@
 }
 
 <div id="header">
-
-	<div class="logo">
-		<div id="headerMessageBox">
-			<span class="headerMessage">Reservations By The Minute</span>
-		</div>
-		<div id="partyBox">
-			<div class="inner">
-				<span id="partySize">Party Size:</span>
-			</div>
-			<div id="red" class="inner">
-				<span class="innerLabel">1-3</span>
-			</div>
-			<div id="yellow" class="inner">
-				<span class="innerLabel">4-6</span>
-			</div>
-			<div id="blue" class="inner">
-				<span class="innerLabel">7+</span>
-			</div>
-		</div>
-		<div id="resosPerMin">
-			<span class="resosPerMin">North America: <span id="resosPerMinuteNa">0</span> reservations/minute (approx)</span>
-			<span class="resosPerMin">Europe: <span id="resosPerMinuteEu">0</span> reservations/minute (approx)</span>
-			<span class="resosPerMin">Japan: <span id="resosPerMinuteAsia">0</span> reservations/minute (approx)</span>
-		</div>
-	</div>
-	<div>
-		<span class="delayMessage">*Delayed up to 5 minutes.</span>
-	</div>
+    <div class="logo">
+    </div>
+    <div id="headerMessageBox">
+        <span class="headerMessage">Reservations By The Minute</span>
+    </div>
+    <div id="resosPerMin">
+        <span class="resosPerMin">NA <span id="resosPerMinuteNa" class="redText">0</span></span>
+        <span class="resosPerMin">EU <span id="resosPerMinuteEu" class="redText">0</span></span>
+        <span class="resosPerMin">JP <span id="resosPerMinuteAsia" class="redText">0</span></span>
+    </div>
+    <div id="partyBox">
+        <div class="inner">
+            <span id="partySize" class="inner">Party Size</span>
+            <span class="inner redText">1-3</span>
+            <div id="red" class="inner">
+            </div>
+            <span class="inner redText">4-6</span>
+            <div id="yellow" class="inner">
+            </div>
+            <span class="inner redText">7+</span>
+            <div id="blue" class="inner">
+            </div>
+        </div>
+    </div>
 </div>
 <div id="map-canvas" />
 
@@ -379,28 +435,19 @@
 	<style type="text/css">
 		span
 		{
-			font-family: Arial, Helvetica, sans-serif;
-		}
-
-		.innerLabel
-		{
-			padding-top: 38px;
-			display: block;
-			text-align: center;
-			padding-right: 3px;
+		    /*font-family: brittanic bold;*/
+            font-family: garamond;
 		}
 
 		#partySize
 		{
-			padding-top: 15px;
-			display: block;
-			padding-right: 24px;
+			padding-right: 20px;
 		}
 
 		#blue
 		{
 			width: 44px;
-			height: 50px;
+			height: 35px;
 			background-image: url(../../Content/img/blue_restaurant.png);
 			background-position: top center;
 			opacity: 1;
@@ -410,7 +457,7 @@
 		#red
 		{
 			width: 44px;
-			height: 50px;
+			height: 35px;
 			background-image: url(../../Content/img/red_restaurant.png);
 			background-position: top center;
 			opacity: 1;
@@ -420,7 +467,7 @@
 		#yellow
 		{
 			width: 44px;
-			height: 50px;
+			height: 35px;
 			background-image: url(../../Content/img/yellow_restaurant.png);
 			background-position: top center;
 			opacity: 1;
@@ -430,27 +477,28 @@
 		.inner
 		{
 			float: left;
-			height: 100%;
 		}
 
 		#partyBox
 		{
-			float: right;
+			float: left;
 			padding-right: 35px;
-			padding-top: 20px;
+			padding-top: 18px;
 		}
 
 
 		#headerMessageBox
 		{
-			width: 750px;
+			width: 440px;
 			height: 100%;
 			float: left;
+            padding-top: 18px;
 		}
 
 		html
 		{
 			height: 100%;
+            font-size: 2em;
 		}
 
 		body
@@ -466,57 +514,47 @@
 			position: relative;
 		}
 
-		#header
-		{
-			height: 100px;
-			min-height: 75px;
-			position: absolute;
-			z-index: 1;
-			background-color: white;
-			width: 100%;
-			opacity: .8;
-			border-bottom: solid 1px red;
-		}
+	    #header {
+	        min-height: 75px;
+	        position: absolute;
+	        z-index: 1;
+	        background-color: white;
+	        width: 99%;
+	        opacity: .9;
+	        border: solid 1px red;
+	        margin-left: .5%;
+	        margin-top: 4px;
+	        border-radius: 4px;
+            box-shadow: 0px 0px 25px rgba(50, 50, 50, 0.50);
+	    }
 
-		.headerMessage
-		{
-			display: block;
-			text-align: left;
-			font-size: 2em;
-			padding-top: 30px;
-			padding-left: 249px;
-			float: left;
-		}
+	    .headerMessage {
+	        text-align: left;
+	        float: left;
+	    }
 
-		.logo
-		{
-			height: 85px;
-			width: 100%;
-			background-image: url(../../Content/img/Logo.png);
-			background-position: left;
-			background-repeat: no-repeat;
-			opacity: 1;
-		}
-
-		.delayMessage
-		{
-			display: block;
-			width: 100%;
-			opacity: 1;
-			text-align: right;
-			font-size: .7em;
-		}
+	    .logo {
+	        height: 75px;
+	        width: 210px;
+	        background-image: url(../../Content/img/Logo.png);
+	        background-position: left;
+	        background-repeat: no-repeat;
+	        opacity: 1;
+	        float: left;
+	    }
 
 		.resosPerMin
 		{
-			display: block;
+            float: left;
+            width: 120px;
 		}
 
 		#resosPerMin {
-			padding-top: 20px;
+		    float: left;
+			padding-top: 18px;
 		}
 
-		#resosPerMinuteNa, #resosPerMinuteEu, #resosPerMinuteAsia {
+		.redText {
 			color: #900000;
 		}
 	</style>
